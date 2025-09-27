@@ -1,0 +1,21 @@
+{
+  "name": "neoai-git-service",
+  "version": "1.0.0",
+  "description": "Git operations and version control service for NeoAI IDE",
+  "main": "dist/main.js",
+  "scripts": {
+    "dev": "nodemon --exec go run main.go",
+    "build": "go build -o dist/git-service main.go",
+    "start": "go run main.go",
+    "test": "go test ./...",
+    "lint": "golangci-lint run"
+  },
+  "keywords": [
+    "git",
+    "version-control",
+    "repository",
+    "collaboration"
+  ],
+  "author": "NeoAI IDE Team",
+  "license": "MIT"
+}

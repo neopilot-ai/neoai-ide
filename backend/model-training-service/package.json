@@ -1,0 +1,30 @@
+{
+  "name": "neoai-model-training-service",
+  "version": "1.0.0",
+  "description": "Custom AI model training and fine-tuning service for NeoAI IDE",
+  "main": "main.py",
+  "scripts": {
+    "dev": "python -m uvicorn main:app --host 0.0.0.0 --port 8010 --reload",
+    "start": "python -m uvicorn main:app --host 0.0.0.0 --port 8010",
+    "test": "python -m pytest tests/ -v",
+    "lint": "python -m flake8 . && python -m black --check .",
+    "format": "python -m black . && python -m isort .",
+    "type-check": "python -m mypy .",
+    "install": "pip install -r requirements.txt",
+    "install-dev": "pip install -r requirements-dev.txt"
+  },
+  "keywords": [
+    "ai",
+    "machine-learning",
+    "model-training",
+    "fine-tuning",
+    "transformers",
+    "pytorch",
+    "tensorflow"
+  ],
+  "author": "NeoAI IDE Team",
+  "license": "MIT",
+  "engines": {
+    "python": ">=3.9"
+  }
+}
