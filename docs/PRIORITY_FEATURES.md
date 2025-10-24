@@ -104,7 +104,7 @@ Features:
   ✅ Simple merge conflict resolution
 
 Acceptance Criteria:
-  - Can clone repositories from GitHub/GitLab
+  - Can clone repositories from GitHub/NeoAi
   - Commit workflow is intuitive and fast
   - Branch operations work without command line
   - Diff view clearly shows changes
