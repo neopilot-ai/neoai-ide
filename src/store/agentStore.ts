@@ -4,9 +4,7 @@ import { immer } from 'zustand/middleware/immer';
 import {
   AgentTask,
   AgentStep,
-  AgentType,
   AgentStatus,
-  StepStatus,
   CreateAgentTaskRequest,
   AgentResponse,
 } from '@/types/agent';

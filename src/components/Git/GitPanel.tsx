@@ -4,16 +4,13 @@ import React, { useState, useEffect } from 'react';
 import {
   ShareIcon,
   CloudArrowUpIcon,
-  CloudArrowDownIcon,
   PlusIcon,
   CheckIcon,
-  XMarkIcon,
   ClockIcon,
   DocumentIcon,
-  FolderIcon,
 } from '@heroicons/react/24/outline';
 import { useGitStore } from '@/store/gitStore';
-import { GitRepository, GitCommit, GitBranch } from '@/types/git';
+import { GitCommit } from '@/types/git';
 import clsx from 'clsx';
 
 interface GitPanelProps {
@@ -41,8 +38,6 @@ export const GitPanel: React.FC<GitPanelProps> = ({ className, projectId }) => {
     initializeRepository,
     cloneRepository,
     getStatus,
-    getBranches,
-    getCommits,
     commitChanges,
     pushChanges,
     createBranch,

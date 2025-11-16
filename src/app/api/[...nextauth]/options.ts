@@ -28,36 +28,35 @@ export const authOptions: NextAuthOptions = {
   ],
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    async signIn({ user, account }: { user: User; account?: Account | null }) {
+    async signIn({ user, account }: { user: User; account?: Account | null }): Promise<boolean> {
       if (user.email && user.email.endsWith("@neoai.com")) {
-        trackLogin(user)
-          .catch(e => console.error('Could not track login:', e))
+        await trackLogin(user)
+          .catch((e) => console.error('Could not track login:', e));
 
         return true;
-      } else {
-        if (account?.access_token) {
-          const glUser = await getCurrentUserWithToken(account.access_token);
-          // Check if user is a member of neoai-org
-          const result = await checkGroupMembership(account.access_token, glUser.id)
-          if (result) {
-            trackLogin(user)
-              .catch(e => console.error('Could not track login:', e))
-            return true;
-          }
+      } else if (account?.access_token) {
+        const glUser = await getCurrentUserWithToken(account.access_token);
+        const result = await checkGroupMembership(account.access_token, glUser.id);
+        if (result) {
+          await trackLogin(user)
+            .catch((e) => console.error('Could not track login:', e));
 
-          return false;
+          return true;
         }
+
         return false;
       }
+
+      return false;
     },
-    async jwt({ token, account }: { token: JWT; account?: Account | null }) {
+    async jwt({ token, account }: { token: JWT; account?: Account | null }): Promise<JWT> {
       if (account) {
         token.accessToken = account.access_token;
         token.refreshToken = account.refresh_token;
       }
       return token;
     },
-    async session({ session, token }: { session: Session; token: JWT }) {
+    async session({ session, token }: { session: Session; token: JWT }): Promise<Session> {
       session.accessToken = token.accessToken;
       session.refreshToken = token.refreshToken;
       return session;
@@ -67,5 +66,5 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
     maxAge: 60 * 60, 
     updateAge: 30 * 60, 
-  }
+  },
 };

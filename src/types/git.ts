@@ -105,7 +105,7 @@ export interface GitStash {
 }
 
 // Git operation response types
-export interface GitOperationResponse<T = any> {
+export interface GitOperationResponse<T = unknown> {
   success: boolean;
   data?: T;
   message?: string;
@@ -151,7 +151,7 @@ export interface GitWorkflowStep {
   name: string;
   action: 'commit' | 'push' | 'merge' | 'tag' | 'deploy';
   conditions: GitWorkflowCondition[];
-  parameters: Record<string, any>;
+  parameters: Record<string, unknown>;
 }
 
 export interface GitWorkflowTrigger {

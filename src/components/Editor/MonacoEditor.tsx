@@ -21,11 +21,9 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
   const { updateTabContent, markTabModified } = useEditorStore();
   const { config } = useConfigStore();
-  const [isReady, setIsReady] = useState(false);
 
   const handleEditorDidMount = (editor: monaco.editor.IStandaloneCodeEditor) => {
     editorRef.current = editor;
-    setIsReady(true);
 
     // Configure editor options
     editor.updateOptions({
@@ -96,7 +94,7 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
     monaco.languages.registerCompletionItemProvider(tab.language, {
       provideCompletionItems: async (model, position) => {
         // Get context around cursor
-        const textUntilPosition = model.getValueInRange({
+        model.getValueInRange({
           startLineNumber: Math.max(1, position.lineNumber - 10),
           startColumn: 1,
           endLineNumber: position.lineNumber,
@@ -114,7 +112,7 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
 
     // Register AI code actions
     monaco.languages.registerCodeActionProvider(tab.language, {
-      provideCodeActions: async (model, range, context) => {
+      provideCodeActions: async (model, range) => {
         const actions: monaco.languages.CodeAction[] = [];
 
         // Add AI-powered code actions

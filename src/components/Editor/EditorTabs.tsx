@@ -3,7 +3,6 @@
 import React from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { useEditorStore } from '@/store';
-import { EditorTab } from '@/types';
 import clsx from 'clsx';
 
 interface EditorTabsProps {
@@ -11,7 +10,7 @@ interface EditorTabsProps {
 }
 
 export const EditorTabs: React.FC<EditorTabsProps> = ({ className }) => {
-  const { tabs, activeTabId, setActiveTab, closeTab } = useEditorStore();
+  const { tabs, setActiveTab, closeTab } = useEditorStore();
 
   const handleTabClick = (tabId: string) => {
     setActiveTab(tabId);

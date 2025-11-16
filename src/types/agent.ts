@@ -33,8 +33,8 @@ export interface AgentStep {
   description: string;
   type: string;
   status: StepStatus;
-  inputData: Record<string, any>;
-  outputData: Record<string, any>;
+  inputData: Record<string, unknown>;
+  outputData: Record<string, unknown>;
   errorMessage?: string;
   startedAt?: Date;
   completedAt?: Date;
@@ -54,9 +54,9 @@ export interface AgentTask {
   status: AgentStatus;
   progress: number;
   steps: AgentStep[];
-  context: Record<string, any>;
-  config: Record<string, any>;
-  result: Record<string, any>;
+  context: Record<string, unknown>;
+  config: Record<string, unknown>;
+  result: Record<string, unknown>;
   errorMessage?: string;
   createdAt: Date;
   startedAt?: Date;
@@ -69,8 +69,8 @@ export interface CreateAgentTaskRequest {
   agentType: AgentType;
   title: string;
   description: string;
-  context?: Record<string, any>;
-  config?: Record<string, any>;
+  context?: Record<string, unknown>;
+  config?: Record<string, unknown>;
 }
 
 export interface AgentResponse {
@@ -127,19 +127,19 @@ export interface AgentWorkflowStep {
 
 export interface AgentWorkflowTrigger {
   type: 'manual' | 'schedule' | 'file_change' | 'git_push' | 'api_call';
-  config: Record<string, any>;
+  config: Record<string, unknown>;
   conditions: AgentWorkflowCondition[];
 }
 
 export interface AgentWorkflowCondition {
   field: string;
   operator: 'equals' | 'contains' | 'matches' | 'greater_than' | 'less_than';
-  value: any;
+  value: unknown;
 }
 
 export interface AgentWorkflowAction {
   type: 'notify' | 'create_task' | 'update_status' | 'send_webhook';
-  config: Record<string, any>;
+  config: Record<string, unknown>;
 }
 
 // Agent metrics and monitoring
@@ -171,7 +171,7 @@ export interface AgentTemplate {
   category: string;
   tags: string[];
   config: AgentConfig;
-  context: Record<string, any>;
+  context: Record<string, unknown>;
   steps: Partial<AgentStep>[];
   examples: AgentExample[];
 }
@@ -179,8 +179,8 @@ export interface AgentTemplate {
 export interface AgentExample {
   title: string;
   description: string;
-  input: Record<string, any>;
-  expectedOutput: Record<string, any>;
+  input: Record<string, unknown>;
+  expectedOutput: Record<string, unknown>;
   estimatedDuration: number;
 }
 
@@ -191,7 +191,7 @@ export interface AgentCollaboration {
   description: string;
   participants: AgentParticipant[];
   workflow: AgentWorkflow;
-  sharedContext: Record<string, any>;
+  sharedContext: Record<string, unknown>;
   communicationProtocol: AgentCommunicationProtocol;
 }
 
@@ -247,7 +247,7 @@ export interface AgentImprovement {
 export interface AgentModelUpdate {
   modelVersion: string;
   updateType: 'fine_tuning' | 'prompt_engineering' | 'parameter_adjustment';
-  changes: Record<string, any>;
+  changes: Record<string, unknown>;
   performanceImpact: Record<string, number>;
   rollbackPlan: string;
 }

@@ -36,28 +36,28 @@ help:
 
 # Installation
 install:
-	@echo "📦 Installing dependencies..."
-	npm install
-	cd backend/api-gateway && npm install
-	cd backend/user-service && npm install
-	cd backend/project-service && npm install
+	@echo "Installing dependencies..."
+	npm ci
+	cd backend/api-gateway && npm ci
+	cd backend/user-service && npm ci
+	cd backend/project-service && npm ci
 	cd backend/ai-service && pip install -r requirements.txt
-	@echo "✅ Dependencies installed"
+	@echo "Dependencies installed"
 
 # Database setup
 setup-db:
-	@echo "🗄️ Setting up database..."
-	cd backend/user-service && npx prisma generate && npx prisma migrate dev
-	cd backend/project-service && npx prisma generate && npx prisma migrate dev
-	@echo "✅ Database setup complete"
+	@echo "Setting up database..."
+	cd backend/user-service && $(shell grep DATABASE_URL .env) npx prisma generate && $(shell grep DATABASE_URL .env) npx prisma migrate dev
+	cd backend/project-service && $(shell grep DATABASE_URL .env) npx prisma generate && $(shell grep DATABASE_URL .env) npx prisma migrate dev
+	@echo "Database setup complete"
 
 # Full setup
 setup: install setup-db
-	@echo "🎉 Setup complete! Run 'make dev' to start development"
+	@echo "Setup complete! Run 'make dev' to start development"
 
 # Development
 dev:
-	@echo "🚀 Starting development servers..."
+	@echo "Starting development servers..."
 	docker-compose up -d postgres redis
 	sleep 5
 	concurrently \
@@ -68,11 +68,11 @@ dev:
 		"cd backend/ai-service && python -m uvicorn main:app --host 0.0.0.0 --port 8003 --reload"
 
 dev-frontend:
-	@echo "🎨 Starting frontend development server..."
+	@echo "Starting frontend development server..."
 	npm run dev
 
 dev-backend:
-	@echo "⚙️ Starting backend services..."
+	@echo "Starting backend services..."
 	docker-compose up -d postgres redis
 	sleep 5
 	concurrently \
@@ -83,37 +83,37 @@ dev-backend:
 
 # Docker commands
 docker-build:
-	@echo "🐳 Building Docker images..."
+	@echo "Building Docker images..."
 	docker-compose build
 
 docker-up:
-	@echo "🐳 Starting all services with Docker..."
+	@echo "Starting all services with Docker..."
 	docker-compose up -d
-	@echo "✅ All services started"
-	@echo "📱 Frontend: http://localhost:3000"
-	@echo "🔗 API Gateway: http://localhost:8000"
+	@echo "All services started"
+	@echo "Frontend: http://localhost:3000"
+	@echo "API Gateway: http://localhost:8000"
 
 docker-down:
-	@echo "🐳 Stopping Docker services..."
+	@echo "Stopping Docker services..."
 	docker-compose down
 
 docker-logs:
-	@echo "📋 Showing Docker logs..."
+	@echo "Showing Docker logs..."
 	docker-compose logs -f
 
 # Database commands
 db-migrate:
-	@echo "🗄️ Running database migrations..."
+	@echo "Running database migrations..."
 	cd backend/user-service && npx prisma migrate dev
 	cd backend/project-service && npx prisma migrate dev
 
 db-seed:
-	@echo "🌱 Seeding database..."
+	@echo "Seeding database..."
 	cd backend/user-service && npm run db:seed
 	cd backend/project-service && npm run db:seed
 
 db-reset:
-	@echo "🔄 Resetting database..."
+	@echo "Resetting database..."
 	docker-compose down postgres
 	docker volume rm neoai-ide_postgres_data
 	docker-compose up -d postgres
@@ -123,14 +123,14 @@ db-reset:
 
 # Build commands
 build:
-	@echo "🏗️ Building for production..."
+	@echo "Building for production..."
 	npm run build
 	cd backend/api-gateway && npm run build
 	cd backend/user-service && npm run build
 	cd backend/project-service && npm run build
 
 test:
-	@echo "🧪 Running tests..."
+	@echo "Running tests..."
 	npm test
 	cd backend/api-gateway && npm test
 	cd backend/user-service && npm test
@@ -138,14 +138,14 @@ test:
 	cd backend/ai-service && python -m pytest
 
 lint:
-	@echo "🔍 Running linters..."
+	@echo "Running linters..."
 	npm run lint
 	cd backend/api-gateway && npm run lint
 	cd backend/user-service && npm run lint
 	cd backend/project-service && npm run lint
 
 clean:
-	@echo "🧹 Cleaning build artifacts..."
+	@echo "Cleaning build artifacts..."
 	rm -rf dist
 	rm -rf .next
 	rm -rf node_modules/.cache
@@ -155,48 +155,46 @@ clean:
 
 # Environment setup
 env-copy:
-	@echo "📋 Copying environment files..."
+	@echo "Copying environment files..."
 	cp .env.example .env
-	cp backend/api-gateway/.env.example backend/api-gateway/.env
-	cp backend/user-service/.env.example backend/user-service/.env
-	cp backend/project-service/.env.example backend/project-service/.env
-	cp backend/ai-service/.env.example backend/ai-service/.env
-	@echo "⚠️ Please update the .env files with your configuration"
+
+	@echo "Please update the .env files with your configuration"
 
 # Health check
 health:
-	@echo "🏥 Checking service health..."
-	curl -f http://localhost:8000/health || echo "❌ API Gateway down"
-	curl -f http://localhost:8001/health || echo "❌ User Service down"
-	curl -f http://localhost:8002/health || echo "❌ Project Service down"
-	curl -f http://localhost:8003/health || echo "❌ AI Service down"
-	curl -f http://localhost:3000 || echo "❌ Frontend down"
+	@echo "Checking service health..."
+	curl -f http://localhost:8000/health || echo "API Gateway down"
+	curl -f http://localhost:8001/health || echo "User Service down"
+	curl -f http://localhost:8002/health || echo "Project Service down"
+	curl -f http://localhost:8003/health || echo "AI Service down"
+	curl -f http://localhost:3000 || echo "Frontend down"
 
 # Production deployment
 deploy-staging:
-	@echo "🚀 Deploying to staging..."
+	@echo "Deploying to staging..."
 	# Add staging deployment commands here
 
 deploy-production:
-	@echo "🚀 Deploying to production..."
+	@echo "Deploying to production..."
 	# Add production deployment commands here
 
 # Backup
 backup:
-	@echo "💾 Creating backup..."
+	@echo "Creating backup..."
 	docker exec neoai-postgres pg_dump -U neoai neoai_ide > backup_$(shell date +%Y%m%d_%H%M%S).sql
-	@echo "✅ Backup created"
+	@echo "Backup created"
 
 # Monitoring
 logs:
-	@echo "📋 Showing application logs..."
+	@echo "Showing application logs..."
 	tail -f backend/*/logs/*.log
 
 # Security
 security-scan:
-	@echo "🔒 Running security scan..."
+	@echo "Running security scan..."
 	npm audit
 	cd backend/api-gateway && npm audit
 	cd backend/user-service && npm audit
 	cd backend/project-service && npm audit
 	cd backend/ai-service && pip-audit
+
