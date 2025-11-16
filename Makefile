@@ -57,10 +57,7 @@ setup: install setup-db
 
 # Development
 dev:
-	@echo "Starting development servers..."
-	docker-compose up -d postgres redis
-	sleep 5
-	concurrently \
+	npx concurrently \
 		"npm run dev" \
 		"cd backend/api-gateway && npm run dev" \
 		"cd backend/user-service && npm run dev" \
@@ -75,7 +72,7 @@ dev-backend:
 	@echo "Starting backend services..."
 	docker-compose up -d postgres redis
 	sleep 5
-	concurrently \
+	npx concurrently \
 		"cd backend/api-gateway && npm run dev" \
 		"cd backend/user-service && npm run dev" \
 		"cd backend/project-service && npm run dev" \
