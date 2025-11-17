@@ -12,7 +12,7 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/neoai-ide/neoai-ide.git
+git clone https://github.com/neopilot-ai/neoai-ide.git
 cd neoai-ide
 
 # Setup environment
@@ -292,7 +292,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **Documentation**: [docs.neoai-ide.com](https://docs.neoai-ide.com)
 - **Community**: [Discord](https://discord.gg/neoai-ide)
-- **Issues**: [GitHub Issues](https://github.com/neoai-ide/neoai-ide/issues)
+- **Issues**: [GitHub Issues](https://github.com/neopilot-ai/neoai-ide/issues)
 - **Email**: support@neoai-ide.com
 
 ## 🗺️ Roadmap

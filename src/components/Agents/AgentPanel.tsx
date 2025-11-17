@@ -28,18 +28,15 @@ interface CreateTaskFormData {
   agentType: AgentType;
   title: string;
   description: string;
-  context: Record<string, any>;
-  config: Record<string, any>;
+  config: Record<string, unknown>;
 }
 
 export const AgentPanel: React.FC<AgentPanelProps> = ({ className, projectId }) => {
   const {
     tasks,
-    activeTaskId,
     isLoading,
     error,
     createTask,
-    getTask,
     getTasks,
     cancelTask,
     connectWebSocket,
@@ -51,7 +48,6 @@ export const AgentPanel: React.FC<AgentPanelProps> = ({ className, projectId }) 
     agentType: AgentType.FEATURE_IMPLEMENTER,
     title: '',
     description: '',
-    context: {},
     config: {},
   });
 
@@ -75,7 +71,6 @@ export const AgentPanel: React.FC<AgentPanelProps> = ({ className, projectId }) 
         agentType: createForm.agentType,
         title: createForm.title,
         description: createForm.description,
-        context: createForm.context,
         config: createForm.config,
       });
 
@@ -83,7 +78,6 @@ export const AgentPanel: React.FC<AgentPanelProps> = ({ className, projectId }) 
         agentType: AgentType.FEATURE_IMPLEMENTER,
         title: '',
         description: '',
-        context: {},
         config: {},
       });
       setShowCreateForm(false);

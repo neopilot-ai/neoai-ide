@@ -304,7 +304,7 @@ export const useGitStore = create<GitStore>()(
         }
       },
 
-      deleteBranch: async (projectId: string, branchName: string) => {
+      deleteBranch: async () => {
         // TODO: Implement branch deletion
         console.log('Delete branch not implemented yet');
       },
@@ -417,7 +417,7 @@ export const useGitStore = create<GitStore>()(
         }
       },
 
-      pullChanges: async (projectId: string, remote = 'origin', branch?: string) => {
+      pullChanges: async (projectId: string) => {
         // TODO: Implement pull operation
         console.log('Pull changes not implemented yet');
       },

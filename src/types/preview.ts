@@ -81,7 +81,7 @@ export interface DeploymentTarget {
   id: string;
   name: string;
   type: 'netlify' | 'vercel' | 'aws' | 'gcp' | 'azure' | 'docker' | 'kubernetes';
-  config: Record<string, any>;
+  config: Record<string, unknown>;
   isActive: boolean;
 }
 
@@ -273,7 +273,7 @@ export interface PreviewOptimization {
   environmentId: string;
   type: 'minification' | 'compression' | 'bundling' | 'tree_shaking';
   enabled: boolean;
-  config: Record<string, any>;
+  config: Record<string, unknown>;
   impact: {
     sizeBefore: number;
     sizeAfter: number;

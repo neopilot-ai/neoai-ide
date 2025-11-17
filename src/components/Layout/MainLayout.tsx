@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useEditorStore, useAppStore } from '@/store';
+import { useEditorStore } from '@/store';
 import { FileTree } from '@/components/FileExplorer/FileTree';
 import { EditorTabs } from '@/components/Editor/EditorTabs';
 import dynamic from 'next/dynamic';
@@ -12,7 +12,6 @@ import { GitPanel } from '@/components/Git/GitPanel';
 import { AgentPanel } from '@/components/Agents/AgentPanel';
 import { PreviewPanel } from '@/components/Preview/PreviewPanel';
 import {
-  Bars3Icon,
   FolderIcon,
   ChatBubbleLeftRightIcon,
   Cog6ToothIcon,
@@ -27,8 +26,8 @@ interface MainLayoutProps {
   children?: React.ReactNode;
 }
 
-export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
-  const { tabs, activeTabId, isFileTreeOpen } = useEditorStore();
+export const MainLayout: React.FC<MainLayoutProps> = () => {
+  const { tabs, activeTabId } = useEditorStore();
   const [activePanel, setActivePanel] = useState<'files' | 'ai' | 'git' | 'agents' | 'preview' | 'settings'>('files');
   const [rightPanelOpen, setRightPanelOpen] = useState(true);
   const [currentProjectId] = useState('sample-project'); // TODO: Get from actual project context
@@ -185,7 +184,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             {activeTab ? (
               <MonacoEditor
                 tab={activeTab}
-                onContentChange={(content) => {
+                onContentChange={() => {
                   // Content change is handled in the Monaco component
                 }}
                 onCursorPositionChange={(line, column) => {

@@ -154,7 +154,7 @@ As a developer, I want seamless Git integration so I can manage version control 
 1. **Repository Connection**: User connects to Git repository:
    - Clone existing repository
    - Initialize new repository
-   - Connect to remote (GitHub, GitLab, etc.)
+   - Connect to remote (GitHub, NeoAi, etc.)
 2. **Branch Management**: Visual branch interface with:
    - Branch creation and switching
    - Merge conflict resolution

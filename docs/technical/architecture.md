@@ -217,7 +217,7 @@ API Endpoints:
 
 #### Git Service
 ```go
-// Technology: Go + Git libraries + GitHub/GitLab APIs
+// Technology: Go + Git libraries + GitHub/NeoAi APIs
 Responsibilities:
 - Git repository operations
 - Branch and merge management
