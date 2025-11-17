@@ -1,7 +1,6 @@
 "use server";
 
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { NEOAI_BASE_URL } from "../../common/constants";
 import { Issue } from "../../common/entities/issue";
 

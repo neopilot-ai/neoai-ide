@@ -2,7 +2,6 @@
 
 import { getServerSession } from "next-auth";
 import { InsightsBlob } from "../common/entities/blob";
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { trackRun } from "../../telemetry";
 import { NEOAI_BASE_URL } from "../common/constants";
 import { fetchFunctionsAndClasses, fetchHighLevelInsights, fetchOtherInsights } from "./insights";
@@ -10,7 +9,7 @@ import { fetchFunctionsAndClasses, fetchHighLevelInsights, fetchOtherInsights } 
 export async function fetchBlob(url: string) : Promise<InsightsBlob | null> {
   const {project, path, ref} = parseBlobURL(url);
 
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
   if (!session) {
     return null
   }

@@ -26,7 +26,7 @@ export const requestLogger = (req: Request, res: Response, next: NextFunction): 
       contentLength: res.get('Content-Length'),
     });
 
-    originalEnd.call(this, chunk, encoding);
+    return originalEnd.call(this, chunk, encoding);
   };
 
   next();

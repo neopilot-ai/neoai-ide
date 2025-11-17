@@ -8,7 +8,6 @@ import { Issue } from "../common/entities/issue";
 import { MergeRequest } from "../common/entities/merge_request";
 import { Epic } from "../common/entities/epic";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { trackRun } from "../../telemetry";
 
 export type ArtifactType =
@@ -149,7 +148,7 @@ export async function* sendChatMessage(
   selectedText?: string
 ): AsyncGenerator<UserChatMessageResponse, void, unknown> {
 
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
   if (!session) {
     return;
   }

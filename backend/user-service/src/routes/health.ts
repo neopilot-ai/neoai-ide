@@ -1,5 +1,6 @@
 import express from 'express';
 import { prisma } from '../utils/database';
+import { logger } from '../utils/logger';
 
 const router = express.Router();
 
@@ -18,11 +19,13 @@ router.get('/', async (req, res) => {
       memory: process.memoryUsage(),
     });
   } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     res.status(503).json({
       status: 'unhealthy',
       timestamp: new Date().toISOString(),
       service: 'user-service',
       error: 'Database connection failed',
+      details: errorMessage,
     });
   }
 });
@@ -40,7 +43,9 @@ router.get('/detailed', async (req, res) => {
     await prisma.$queryRaw`SELECT 1`;
     checks.database = true;
   } catch (error) {
-    // Database check failed
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    logger.warn(`Database health check failed: ${errorMessage}`);
+    checks.database = false;
   }
 
   // Memory check (fail if using more than 1GB)

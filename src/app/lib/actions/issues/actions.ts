@@ -1,7 +1,6 @@
 'use server';
 
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../../api/auth/[...nextauth]/options";
 import { trackRun } from '@/app/lib/telemetry';
 import { parseNeoaiIssueUrl } from "../../utils";
 import { getDiscussionSummary, getIssueSummaries, getIssueUnderstanding, getMRSummaries } from "./analysis";
@@ -12,7 +11,7 @@ import { Issue } from "../common/entities/issue";
 
 // Fetch issue from NeoAi API using the URL
 export async function fetchIssue(url: string): Promise<Issue | null> {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
   if (!session) {
     return null
   }

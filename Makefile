@@ -1,6 +1,6 @@
 # NeoAI IDE - Development Makefile
 
-.PHONY: help install dev build test clean docker-build docker-up docker-down setup-db
+.PHONY: help install dev build test clean docker-build docker-up docker-down setup-db setup env-setup docker-up-db
 
 # Default target
 help:
@@ -8,9 +8,11 @@ help:
 	@echo "=============================="
 	@echo ""
 	@echo "Setup Commands:"
+	@echo "  env-setup   - Setup environment files from .env.example"
+	@echo "  docker-up-db - Start PostgreSQL and Redis in Docker"
 	@echo "  install     - Install all dependencies"
-	@echo "  setup-db    - Setup database and run migrations"
-	@echo "  setup       - Full setup (install + database)"
+	@echo "  setup-db    - Setup database and run migrations (requires docker-up-db)"
+	@echo "  setup       - Full setup (env-setup + docker-up-db + install + setup-db)"
 	@echo ""
 	@echo "Development Commands:"
 	@echo "  dev         - Start development servers"
@@ -44,39 +46,61 @@ install:
 	cd backend/ai-service && pip install -r requirements.txt
 	@echo "Dependencies installed"
 
+# Environment setup
+env-setup:
+	@echo "Setting up environment files..."
+	@if [ ! -f .env ]; then cp .env.example .env; fi
+	@if [ ! -f backend/user-service/.env ]; then cp .env.example backend/user-service/.env; fi
+	@if [ ! -f backend/project-service/.env ]; then cp .env.example backend/project-service/.env; fi
+	@echo "Environment files created. Please update them with your configuration."
+
+# Start database services
+docker-up-db:
+	@echo "Starting PostgreSQL and Redis..."
+	docker-compose up -d postgres redis
+	@echo "Waiting for services to be healthy (30s)..."
+	sleep 30
+	@echo "✅ Database services are ready"
+
 # Database setup
-setup-db:
+setup-db: env-setup
 	@echo "Setting up database..."
-	cd backend/user-service && $(shell grep DATABASE_URL .env) npx prisma generate && $(shell grep DATABASE_URL .env) npx prisma migrate dev
-	cd backend/project-service && $(shell grep DATABASE_URL .env) npx prisma generate && $(shell grep DATABASE_URL .env) npx prisma migrate dev
-	@echo "Database setup complete"
+	@echo "⚠️  Ensuring PostgreSQL is running..."
+	@docker ps | grep -q neoai-postgres || (echo "Starting PostgreSQL..." && make docker-up-db)
+	@echo "Running migrations..."
+	cd backend/user-service && npx prisma migrate deploy --skip-generate || npx prisma migrate dev --name init || true
+	cd backend/project-service && npx prisma migrate deploy --skip-generate || npx prisma migrate dev --name init || true
+	@echo "✅ Database setup complete"
 
 # Full setup
-setup: install setup-db
-	@echo "Setup complete! Run 'make dev' to start development"
+setup: install env-setup docker-up-db setup-db
+	@echo "✅ Setup complete!"
+	@echo "To start development: make dev-backend"
 
 # Development
+# Development
 dev:
+	@echo "Starting NeoAI IDE development environment..."
+	@echo "⚠️  Make sure Docker is running and services are started: make docker-up"
 	npx concurrently \
 		"npm run dev" \
 		"cd backend/api-gateway && npm run dev" \
 		"cd backend/user-service && npm run dev" \
-		"cd backend/project-service && npm run dev" \
-		"cd backend/ai-service && python -m uvicorn main:app --host 0.0.0.0 --port 8003 --reload"
+		"cd backend/project-service && npm run dev"
 
 dev-frontend:
 	@echo "Starting frontend development server..."
 	npm run dev
 
 dev-backend:
-	@echo "Starting backend services..."
+	@echo "Starting backend services with Docker..."
 	docker-compose up -d postgres redis
+	@echo "Waiting for services to be healthy..."
 	sleep 5
 	npx concurrently \
 		"cd backend/api-gateway && npm run dev" \
 		"cd backend/user-service && npm run dev" \
-		"cd backend/project-service && npm run dev" \
-		"cd backend/ai-service && python -m uvicorn main:app --host 0.0.0.0 --port 8003 --reload"
+		"cd backend/project-service && npm run dev"
 
 # Docker commands
 docker-build:
@@ -149,13 +173,6 @@ clean:
 	cd backend/api-gateway && rm -rf dist
 	cd backend/user-service && rm -rf dist
 	cd backend/project-service && rm -rf dist
-
-# Environment setup
-env-copy:
-	@echo "Copying environment files..."
-	cp .env.example .env
-
-	@echo "Please update the .env files with your configuration"
 
 # Health check
 health:

@@ -186,14 +186,15 @@ export const requirePlan = (requiredPlan: string | string[]) => {
       return;
     }
 
-    const userPlanIndex = planHierarchy.indexOf(req.user.plan.toUpperCase());
+    const userPlan = (req.user as any).plan || 'FREE';
+    const userPlanIndex = planHierarchy.indexOf(userPlan.toUpperCase());
     const requiredPlanIndex = Math.min(...plans.map(plan => planHierarchy.indexOf(plan.toUpperCase())));
 
     if (userPlanIndex < requiredPlanIndex) {
       res.status(403).json({
         error: 'Insufficient plan',
         message: `This feature requires ${plans.join(' or ')} plan`,
-        currentPlan: req.user.plan,
+        currentPlan: userPlan,
         requiredPlan: plans,
       });
       return;

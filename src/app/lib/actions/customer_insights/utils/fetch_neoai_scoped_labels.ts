@@ -2,7 +2,6 @@
 
 import { getServerSession } from "next-auth";
 import { NEOAI_BASE_URL } from "../../common/constants";
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { NeoAiScopedLabel } from "../types";
 
 const NEOAI_GROUP_ID = 9970; // Replace with your actual NeoAi Group ID
@@ -15,7 +14,7 @@ export async function fetchNeoAiScopedLabels(
   let page = 1;
   let hasMorePages = true;
 
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
   if (!session) {
     throw new Error("Invalid session");
   }

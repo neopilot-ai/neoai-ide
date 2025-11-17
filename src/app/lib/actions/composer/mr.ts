@@ -2,15 +2,13 @@
 
 import { getServerSession } from "next-auth";
 import { extractProjectInfo } from "../../utils";
-import { MergeRequest } from "../common/entities/merge_request";
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { NEOAI_BASE_URL } from "../common/constants";
 import { redirect } from "next/navigation";
 
 export async function fetchMergeRequest(url: string) : Promise<MergeRequest | null> {
   const mrURL = extractProjectInfo(url);
 
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
   if (!session) {
     redirect('/api/auth/signin');
   }
@@ -65,7 +63,7 @@ export async function fetchMergeRequest(url: string) : Promise<MergeRequest | nu
 
 export async function saveMergeRequest(url: string, description: string) {
   const mrURL = extractProjectInfo(url);
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
   if (!session) {
     throw new Error('No session found. Please log in.');
   }

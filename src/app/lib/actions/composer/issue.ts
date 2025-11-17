@@ -2,13 +2,12 @@
 
 import { getServerSession } from "next-auth";
 import { Issue } from "../common/entities/issue";
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { parseNeoaiIssueUrl } from "../../utils";
 import { redirect } from "next/navigation";
 import { NEOAI_BASE_URL } from "../common/constants";
 
 export async function fetchIssue(url: string): Promise<Issue | null> {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
   if (!session) {
     redirect('/api/auth/signout');
     return null
@@ -64,7 +63,7 @@ export async function fetchIssue(url: string): Promise<Issue | null> {
 export async function saveIssue(url: string, description: string) {
   try {
     const { projectId, issueIid } = parseNeoaiIssueUrl(url);
-    const session = await getServerSession(authOptions);
+    const session = await getServerSession();
     if (!session) {
       throw new Error('No session found. Please log in.');
     }

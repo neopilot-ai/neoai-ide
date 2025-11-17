@@ -74,7 +74,18 @@ if (process.env.ENABLE_SWAGGER === 'true') {
 app.use('/health', healthRouter);
 
 // Service proxy configurations
-const serviceProxies = {
+
+type ProxyConfig = {
+  target: string;
+  pathRewrite: { [key: string]: string };
+  middleware?: Array<(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) => any>;
+};
+
+const serviceProxies: Record<string, ProxyConfig> = {
   '/api/auth': {
     target: process.env.USER_SERVICE_URL || 'http://localhost:8001',
     pathRewrite: { '^/api/auth': '/auth' },
@@ -139,13 +150,16 @@ Object.entries(serviceProxies).forEach(([path, config]) => {
     },
     onProxyReq: (proxyReq, req) => {
       // Add request ID for tracing
-      const requestId = req.headers['x-request-id'] || `req-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      const requestId = typeof req.headers['x-request-id'] === 'string' 
+        ? req.headers['x-request-id'] 
+        : `req-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
       proxyReq.setHeader('x-request-id', requestId);
       
       // Forward user information
-      if (req.user) {
-        proxyReq.setHeader('x-user-id', req.user.id);
-        proxyReq.setHeader('x-user-email', req.user.email);
+      if (req.user && typeof req.user === 'object' && 'id' in req.user && 'email' in req.user) {
+        const user = req.user as { id: string; email: string };
+        proxyReq.setHeader('x-user-id', user.id);
+        proxyReq.setHeader('x-user-email', user.email);
       }
     },
     onProxyRes: (proxyRes, req, res) => {

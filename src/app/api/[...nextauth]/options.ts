@@ -1,8 +1,8 @@
-import NeoAiProvider from "next-auth/providers/neoai";
+import Credentials from "next-auth/providers/credentials";
 import type { NextAuthOptions, Session, User, Account } from "next-auth";
 import type { JWT } from "next-auth/jwt";
 import { trackLogin } from "@/app/lib/telemetry";
-import { checkGroupMembership, getCurrentUserWithToken } from "@/app/lib/actions/common/fetch_user";
+import { checkGroupMembership, getCurrentUserWithToken } from "@/app/lib/actions/common/fetch_user_utils";
 
 declare module "next-auth" {
   interface Session {
@@ -20,10 +20,30 @@ declare module "next-auth/jwt" {
 
 export const authOptions: NextAuthOptions = {
   providers: [
-    NeoAiProvider({
-      clientId: process.env.NEOAI_CLIENT_ID || '',
-      clientSecret: process.env.NEOAI_CLIENT_SECRET || '',
-      authorization: { params: { scope: "read_user api" } },
+    Credentials({
+      id: "neoai",
+      name: "NeoAI",
+      credentials: {
+        email: { label: "Email", type: "text" },
+        accessToken: { label: "Access Token", type: "password" },
+      },
+      async authorize(credentials) {
+        if (!credentials?.accessToken) {
+          throw new Error("Access token is required");
+        }
+        
+        try {
+          const user = await getCurrentUserWithToken(credentials.accessToken);
+          return {
+            id: user.id.toString(),
+            email: user.email,
+            name: user.name,
+          };
+        } catch (error) {
+          console.error("Failed to authorize user:", error);
+          throw new Error("Authorization failed");
+        }
+      },
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,

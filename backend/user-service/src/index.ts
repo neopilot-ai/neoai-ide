@@ -119,7 +119,8 @@ async function testDatabaseConnection() {
     await prisma.$connect();
     logger.info('✅ Database connected successfully');
   } catch (error) {
-    logger.error('❌ Database connection failed:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    logger.error(`❌ Database connection failed: ${errorMessage}`);
     process.exit(1);
   }
 }
@@ -145,7 +146,8 @@ async function startServer() {
           await prisma.$disconnect();
           logger.info('Database disconnected');
         } catch (error) {
-          logger.error('Error disconnecting from database:', error);
+          const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+          logger.error(`Error disconnecting from database: ${errorMessage}`);
         }
         
         logger.info('Process terminated');
@@ -157,7 +159,8 @@ async function startServer() {
     process.on('SIGINT', () => gracefulShutdown('SIGINT'));
 
   } catch (error) {
-    logger.error('Failed to start server:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    logger.error(`Failed to start server: ${errorMessage}`);
     process.exit(1);
   }
 }

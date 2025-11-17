@@ -1,7 +1,6 @@
 "use server";
 
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { parseNeoaiEpicUrl } from "../../utils";
 import { redirect } from "next/navigation";
 import { NEOAI_GRAPHQL_URL } from "../common/constants";
@@ -9,7 +8,7 @@ import { Epic, GraphQLEpicResponse, mapGraphQLResponseToEpic } from "../common/e
 import { EPIC_QUERY, MUTATE_EPIC_DESCRIPTION } from "../epic/epic_query";
 
 export async function fetchEpic(url: string): Promise<Epic | null> {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
   if (!session) {
     redirect('/api/auth/signout');
   }
@@ -50,7 +49,7 @@ export async function fetchEpic(url: string): Promise<Epic | null> {
 }
 
 export async function saveEpic(id: string, description: string) {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
   if (!session) {
     redirect('/api/auth/signout');
   }

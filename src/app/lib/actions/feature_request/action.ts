@@ -1,5 +1,4 @@
 "use server";
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import clientPromise from "@/app/lib/mongodb";
 import { getServerSession } from "next-auth";
 
@@ -14,8 +13,7 @@ export interface FeatureRequest {
 export async function createFeatureRequest(request: FeatureRequest) {
   const client = await clientPromise;
   const db = client.db();
-
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
   if (!session) {
     return null
   }

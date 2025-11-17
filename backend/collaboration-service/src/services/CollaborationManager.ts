@@ -233,7 +233,7 @@ export class CollaborationManager {
     }
 
     // Get or create session
-    let session = await this.getOrCreateSession(projectId, documentId);
+    const session = await this.getOrCreateSession(projectId, documentId);
 
     // Create participant
     const participant: Participant = {

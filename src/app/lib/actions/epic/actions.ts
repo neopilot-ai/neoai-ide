@@ -2,11 +2,6 @@
 
 import { getServerSession } from "next-auth/next";
 import { parseNeoaiEpicUrl } from "../../utils";
-import { NEOAI_GRAPHQL_URL } from "../common/constants";
-import { Epic, GraphQLEpicResponse, mapGraphQLResponseToEpic } from "../common/entities/epic";
-import { EPIC_QUERY } from "./epic_query";
-import { trackRun } from "../../telemetry";
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { getEpicSummary } from "./summary";
 import { getIssueSummaries } from "../common/issue_summary";
 import { getReleaseNotes } from "./release_notes";
@@ -14,7 +9,7 @@ import { getReleaseNotes } from "./release_notes";
 export async function fetchEpic(url: string): Promise<Epic | null> {
   const {groupId, epicIid} = parseNeoaiEpicUrl(url)
 
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
   if (!session) {
     return null
   }

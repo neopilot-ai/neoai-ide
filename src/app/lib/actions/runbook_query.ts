@@ -2,7 +2,6 @@
 
 import { getRunbooksLinks } from "../sqlite"
 import { getTextEmbeddings } from "../vertexai"
-import { authOptions } from '@/app/api/auth/[...nextauth]/options';
 import { getServerSession } from 'next-auth';
 import { trackRun } from '../telemetry';
 import { downloadFiles } from "../utils"
@@ -13,7 +12,7 @@ import { Context } from "./common/entities/runbook_query"
 
 export async function getRunbookQuery(query: string) : Promise<RunbookQuery> {
     try {
-        const session = await getServerSession(authOptions);
+        const session = await getServerSession();
         if (!session) {
             throw new Error("No session found. Please log in.");
         }

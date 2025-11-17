@@ -309,7 +309,8 @@ export class PluginManager {
       
       logger.info('✅ Plugin Manager initialized');
     } catch (error) {
-      logger.error('Failed to initialize Plugin Manager:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      logger.error(`Failed to initialize Plugin Manager: ${errorMessage}`);
       throw error;
     }
   }

@@ -1,7 +1,6 @@
 "use server";
 
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../../api/auth/[...nextauth]/options";
 import { chatAnthropic } from "../anthropic";
 import { Issue } from "./common/entities/issue";
 import { Epic } from "./common/entities/epic";
@@ -17,7 +16,7 @@ export interface ChatMessage {
 }
 
 export async function* sendChatMessage(messages: ChatMessage[], mrDetails?: MergeRequest | null, issue?: Issue | null, epic?: Epic | null, runbookQuery?: boolean | null, blob?: InsightsBlob | null, learn?: Learn): AsyncGenerator<string, void, unknown> {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
   if (!session) {
     throw new Error('No session found. Please log in.');
   }

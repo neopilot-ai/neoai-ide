@@ -20,7 +20,8 @@ router.post('/solve', async (req, res) => {
 
     res.status(200).json(solution);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to solve hybrid problem.', message: error.message });
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    res.status(500).json({ error: 'Failed to solve hybrid problem.', message: errorMessage });
   }
 });
 

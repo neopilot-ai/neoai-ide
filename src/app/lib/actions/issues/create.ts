@@ -2,11 +2,10 @@
 
 import { BaseIssue, CreatedIssue, Issue } from "../common/entities/issue";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../../api/auth/[...nextauth]/options";
 import { trackAction } from "../../telemetry";
 
 export async function createIssues(issues: BaseIssue[], originalIssue: Issue, convertToEpic: boolean): Promise<CreatedIssue[]> {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
   if (!session) {
     throw('No session found. Please log in.')
   }

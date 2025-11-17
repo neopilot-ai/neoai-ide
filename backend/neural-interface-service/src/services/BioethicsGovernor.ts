@@ -56,9 +56,10 @@ export class BioethicsGovernor {
   }
 
   // This would be used to evaluate the responses from the ResponseEncoder
-  public async evaluateResponse(response: any): Promise<BioethicalVerdict> {
+  public async evaluateResponse(response: Record<string, unknown>): Promise<BioethicalVerdict> {
     // Check if the response pattern is known to cause discomfort, seizures, or other adverse effects.
-    if (response.intensity > 0.8) {
+    const intensity = typeof response.intensity === 'number' ? response.intensity : 0;
+    if (intensity > 0.8) {
       return {
         isAllowed: false,
         reason: 'Violates DO_NO_HARM. Response intensity is too high.',

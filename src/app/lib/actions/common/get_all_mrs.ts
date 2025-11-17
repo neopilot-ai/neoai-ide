@@ -1,6 +1,5 @@
 "use server";
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { getServerSession } from "next-auth";
 import { getCurrentUser } from "./fetch_user";
 import { Change, MergeRequest } from "./entities/merge_request";
@@ -11,7 +10,7 @@ export async function getAllMRsAndProjects(
   fetchDiffs: boolean
 ): Promise<{ mergeRequests: MergeRequest[]; projects: Project[] }> {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await getServerSession();
     if (!session) {
       throw new Error("No session found. Please log in.");
     }

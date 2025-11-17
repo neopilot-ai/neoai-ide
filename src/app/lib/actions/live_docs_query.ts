@@ -2,7 +2,6 @@
 
 import { getTextEmbeddings } from "../vertexai"
 import { getRunbooksLinks } from "../sqlite"
-import { authOptions } from '@/app/api/auth/[...nextauth]/options'
 import { getServerSession } from 'next-auth'
 import { trackRun } from '../telemetry'
 import { RunbookQuery, Context } from "./common/entities/runbook_query"
@@ -23,7 +22,7 @@ async function downloadFileContent(rawUrl: string): Promise<string | null> {
 
 export async function getLiveDocsQuery(query: string): Promise<RunbookQuery> {
   try {
-    const session = await getServerSession(authOptions)
+    const session = await getServerSession();
     if (!session) {
       throw new Error("No session found. Please log in.")
     }

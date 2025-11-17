@@ -1,7 +1,6 @@
 'use server';
 
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../../api/auth/[...nextauth]/options";
 import { AnalysisComments, Issue, MergeRequest, Understanding } from "../common/entities/issue";
 import { callAnthropic } from "../../anthropic";
 import { Note } from "../common/entities/discussions";

@@ -1,6 +1,5 @@
 "use server";
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { getServerSession } from "next-auth";
 import { callAnthropic } from "../../anthropic";
 
@@ -8,7 +7,7 @@ const CODE_EXAMPLE_MODEL = 'claude-sonnet-4-0';
 const CODE_EXAMPLE_MAX_OUTPUT_TOKENS = 8192;
 
 export async function getCodeExamples(topic: string, level: string, background: string) : Promise<string | undefined> {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
   if (!session) {
     return;
   }

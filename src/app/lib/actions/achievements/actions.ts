@@ -3,7 +3,6 @@
 import { getServerSession } from 'next-auth';
 import { MergeRequest } from '../common/entities/merge_request';
 import { callAnthropic } from '@/app/lib/anthropic';
-import { authOptions } from '@/app/api/auth/[...nextauth]/options';
 import { trackRun } from '../../telemetry';
 
 function calculateBatches(
@@ -77,7 +76,7 @@ export async function summarizeAchievements(
   temperature: number
 ): Promise<string> {
 
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
   if (!session) {
     throw new Error("No session found. Please log in.");
   }

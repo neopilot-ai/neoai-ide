@@ -1,6 +1,5 @@
 "use server";
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { getServerSession } from "next-auth";
 import { callAnthropic } from "../../anthropic";
 import { trackRun } from "../../telemetry";
@@ -9,7 +8,7 @@ const EXPLANATION_MODEL = 'claude-sonnet-4-0';
 const EXPLANATION_MAX_OUTPUT_TOKENS = 8192;
 
 export async function fetchTopicExplanation(topic: string, level: string, background: string, type: string, previousExplanation?: string) : Promise<string | undefined> {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
   if (!session) {
     return;
   }

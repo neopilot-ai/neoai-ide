@@ -1,7 +1,6 @@
 'use server';
 
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../../api/auth/[...nextauth]/options";
 import { callAnthropic } from "../../anthropic";
 import { Epic, EpicSummary } from "../common/entities/epic";
 
@@ -9,7 +8,7 @@ const EPIC_SUMMARY_MODEL = "claude-sonnet-4-0"
 const EPIC_SUMMARY_MAX_TOKENS = 8192
 
 export async function getEpicSummary(epic: Epic): Promise<EpicSummary> {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
   if (!session) {
     throw('No session found. Please log in.')
   }

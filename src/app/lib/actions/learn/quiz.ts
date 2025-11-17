@@ -1,6 +1,5 @@
 "use server";
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { getServerSession } from "next-auth";
 import { callAnthropic } from "../../anthropic";
 
@@ -59,7 +58,7 @@ function parseXMLResponse(xmlString: string): QuizQuestion[] {
 }
 
 export async function getQuiz(topic: string, level: string, background: string): Promise<QuizQuestion[] | undefined> {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
   if (!session) {
     console.log('getQuiz - session issue')
     return;

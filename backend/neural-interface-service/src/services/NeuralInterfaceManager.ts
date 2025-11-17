@@ -44,7 +44,7 @@ export class NeuralInterfaceManager {
     this.userConnections.delete(userId);
   }
 
-  private async processNeuralData(userId: string, rawData: any): Promise<void> {
+  private async processNeuralData(userId: string, rawData: Record<string, unknown>): Promise<void> {
     try {
       // 1. Process and clean the raw neural signal
       const processedData: NeuralData = await this.signalProcessor.process(rawData);
@@ -80,22 +80,24 @@ export class NeuralInterfaceManager {
         this.sendResponseToUser(userId, neuralResponse);
       }
     } catch (error) {
-      logger.error(`Error processing neural data for user ${userId}:`, error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      logger.error(`Error processing neural data for user ${userId}: ${errorMessage}`);
       this.sendErrorToUser(userId, 'An error occurred while processing your thought.');
     }
   }
 
-  private async sendTaskToAGI(task: any): Promise<any> {
+  private async sendTaskToAGI(task: Record<string, unknown>): Promise<Record<string, unknown>> {
     try {
       const response = await axios.post(`${AGI_CORE_API}/task`, task);
-      return response.data;
+      return response.data as Record<string, unknown>;
     } catch (error) {
-      logger.error('Failed to send task to AGI Core Service:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      logger.error(`Failed to send task to AGI Core Service: ${errorMessage}`);
       throw new Error('Could not communicate with AGI Core.');
     }
   }
 
-  private sendResponseToUser(userId: string, neuralResponse: any): void {
+  private sendResponseToUser(userId: string, neuralResponse: Record<string, unknown>): void {
     const socket = this.userConnections.get(userId);
     if (socket) {
       socket.emit('neural_response_stream', neuralResponse);

@@ -2,12 +2,11 @@
 
 import { getServerSession } from "next-auth";
 import { NEOAI_BASE_URL } from "../common/constants";
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { getCurrentUser } from "../common/fetch_user";
 import { MergeRequest } from "../common/entities/merge_request";
 
 export async function getUserMRs(count: number = 3): Promise<MergeRequest[]> {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
   if (!session) {
     throw new Error('Invalid session');
   }

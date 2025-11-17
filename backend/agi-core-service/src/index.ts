@@ -141,7 +141,8 @@ async function startServer() {
     process.on('SIGINT', () => gracefulShutdown('SIGINT'));
 
   } catch (error) {
-    logger.error('Failed to start AGI Core Service:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    logger.error(`Failed to start AGI Core Service: ${errorMessage}`);
     process.exit(1);
   }
 }

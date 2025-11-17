@@ -1,7 +1,6 @@
 "use server";
 
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../../api/auth/[...nextauth]/options";
 import { trackAction, trackRun } from '@/app/lib/telemetry';
 import { ReviewType } from '../../../../../neoai-ide/src/components/reviewer_prompts';
 import { redirect } from 'next/navigation';
@@ -20,7 +19,7 @@ import { MergeRequest } from "../common/entities/merge_request";
 
 export async function fetchMRDetails(url: string, reviewType: ReviewType, customPromptCodeComments: string | null) : Promise<MergeRequest | null> {
   const mrURL = extractProjectInfo(url);
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
   if (!session) {
     return null
   }

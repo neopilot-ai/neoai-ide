@@ -117,7 +117,8 @@ async function startServer() {
     process.on('SIGINT', () => gracefulShutdown('SIGINT'));
 
   } catch (error) {
-    logger.error('Failed to start Quantum-AI Integration Service:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    logger.error(`Failed to start Quantum-AI Integration Service: ${errorMessage}`);
     process.exit(1);
   }
 }

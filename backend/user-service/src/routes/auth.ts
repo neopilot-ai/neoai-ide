@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { body, validationResult } from 'express-validator';
@@ -37,23 +37,26 @@ const confirmResetValidation = [
 const generateTokens = (userId: string, email: string, name: string, plan: string) => {
   const payload = { id: userId, email, name, plan };
   
+  const jwtSecret = process.env.JWT_SECRET || 'your-default-secret';
+  const refreshSecret = process.env.REFRESH_TOKEN_SECRET || 'your-refresh-secret';
+  
   const accessToken = jwt.sign(
     payload,
-    process.env.JWT_SECRET!,
-    { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
+    jwtSecret,
+    { expiresIn: process.env.JWT_EXPIRES_IN || '7d' } as any
   );
   
   const refreshToken = jwt.sign(
     { id: userId },
-    process.env.REFRESH_TOKEN_SECRET!,
-    { expiresIn: '30d' }
+    refreshSecret,
+    { expiresIn: '30d' } as any
   );
   
   return { accessToken, refreshToken };
 };
 
 // Register endpoint
-router.post('/register', registerValidation, async (req, res) => {
+router.post('/register', registerValidation, async (req: Request, res: Response) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -87,7 +90,7 @@ router.post('/register', registerValidation, async (req, res) => {
         email,
         password: hashedPassword,
         name,
-        plan: 'free',
+        plan: 'FREE',
         emailVerified: false,
         emailVerificationToken: uuidv4(),
       },
@@ -97,6 +100,7 @@ router.post('/register', registerValidation, async (req, res) => {
         name: true,
         plan: true,
         emailVerified: true,
+        emailVerificationToken: true,
         createdAt: true,
       },
     });
@@ -153,7 +157,7 @@ router.post('/register', registerValidation, async (req, res) => {
 });
 
 // Login endpoint
-router.post('/login', loginValidation, async (req, res) => {
+router.post('/login', loginValidation, async (req: Request, res: Response) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -195,6 +199,13 @@ router.post('/login', loginValidation, async (req, res) => {
     }
 
     // Verify password
+    if (!user.password) {
+      return res.status(401).json({
+        error: 'Invalid credentials',
+        message: 'Email or password is incorrect',
+      });
+    }
+
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res.status(401).json({
@@ -327,16 +338,23 @@ router.post('/refresh', async (req, res) => {
 });
 
 // Logout endpoint
-router.post('/logout', authMiddleware, async (req, res) => {
+router.post('/logout', authMiddleware, async (req: Request, res: Response) => {
   try {
     const { refreshToken } = req.body;
+    const userId = (req as any).user?.id;
+
+    if (!userId) {
+      return res.status(401).json({
+        error: 'Not authenticated',
+      });
+    }
 
     if (refreshToken) {
       // Remove refresh token
       await prisma.refreshToken.deleteMany({
         where: {
           token: refreshToken,
-          userId: req.user!.id,
+          userId,
         },
       });
     }
@@ -353,7 +371,7 @@ router.post('/logout', authMiddleware, async (req, res) => {
 });
 
 // Password reset request
-router.post('/reset-password', resetPasswordValidation, async (req, res) => {
+router.post('/reset-password', resetPasswordValidation, async (req: Request, res: Response) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -415,7 +433,7 @@ router.post('/reset-password', resetPasswordValidation, async (req, res) => {
 });
 
 // Confirm password reset
-router.post('/reset-password/confirm', confirmResetValidation, async (req, res) => {
+router.post('/reset-password/confirm', confirmResetValidation, async (req: Request, res: Response) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -582,10 +600,18 @@ router.post('/verify-email', async (req, res) => {
 });
 
 // Get current user
-router.get('/me', authMiddleware, async (req, res) => {
+router.get('/me', authMiddleware, async (req: Request, res: Response) => {
   try {
+    const userId = (req as any).user?.id;
+
+    if (!userId) {
+      return res.status(401).json({
+        error: 'Not authenticated',
+      });
+    }
+
     const user = await prisma.user.findUnique({
-      where: { id: req.user!.id },
+      where: { id: userId },
       select: {
         id: true,
         email: true,

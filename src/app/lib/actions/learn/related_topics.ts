@@ -1,6 +1,5 @@
 "use server";
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { getServerSession } from "next-auth";
 import { callAnthropic } from "../../anthropic";
 
@@ -8,7 +7,7 @@ const RELATED_TOPICS_MODEL = 'claude-sonnet-4-0';
 const RELATED_TOPICS_MAX_OUTPUT_TOKENS = 8192;
 
 export async function getRelatedTopics(topic: string, level: string, background: string) : Promise<string | undefined> {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
   if (!session) {
     return;
   }

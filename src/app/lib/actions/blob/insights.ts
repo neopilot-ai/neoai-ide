@@ -2,7 +2,6 @@
 
 import { getServerSession } from "next-auth";
 import { BlobAnalysis, InsightsBlob } from "../common/entities/blob";
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { callAnthropic } from "../../anthropic";
 
 const MODEL = "claude-sonnet-4-0";
@@ -54,7 +53,7 @@ Respond with the following format in Markdown:
 // 2. Functions & Classes
 // --------------------------------------------------
 export async function fetchFunctionsAndClasses(blob: InsightsBlob): Promise<Pick<BlobAnalysis, "functions" | "classes">> {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
   if (!session) {
     throw new Error("No session found. Please log in.");
   }

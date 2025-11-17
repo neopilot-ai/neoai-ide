@@ -39,7 +39,7 @@ export class EthicalGovernor {
 
     let totalScore = 0;
     const frameworkScores: Record<string, number> = {};
-    let reasons: string[] = [];
+    const reasons: string[] = [];
 
     for (const framework of this.frameworks) {
       let frameworkScore = 0;

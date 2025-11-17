@@ -26,7 +26,7 @@ export interface EpicSummary {
   discussionSummary: string;
   closedIssues: string;
   pendingIssues: string;
-};
+}
 
 export interface GraphQLEpicResponse {
   data: {

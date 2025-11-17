@@ -39,4 +39,4 @@ export async function getSecurityReview(mrChanges: Change[]): Promise<string> {
     console.error('Error generating security review', error);
     return 'Error generating security review';
   }
-};
+}
