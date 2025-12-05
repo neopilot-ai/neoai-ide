@@ -1,0 +1,24 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "jest.disabledWorkspaceFolders": [
+      "NeoPilot",
+      "eslint-config-custom",
+      "backend",
+      "react-textarea",
+      "shared",
+      "tsconfig",
+      "react-ui",
+      "react-core",
+      "tailwind-config",
+      "next-openai",
+      ".next",
+      "NeoPilot",
+      "types"
+    ]
+  }
+}

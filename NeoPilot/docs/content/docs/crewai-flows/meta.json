@@ -1,0 +1,25 @@
+{
+  "title": "CrewAI Flows",
+  "root": true,
+  "pages": [
+    "---Getting Started---",
+    "index",
+    "quickstart",
+    "vibe-coding-mcp",
+    "---Guides---",
+    "custom-look-and-feel",
+    "agentic-chat-ui",
+    "generative-ui",
+    "human-in-the-loop",
+    "shared-state",
+    "frontend-actions",
+    "persistence",
+    "advanced",
+    "---Premium Features---",
+    "...premium",
+    "---Troubleshooting---",
+    "...troubleshooting",
+    "---Other---",
+    "...(other)"
+  ]
+}

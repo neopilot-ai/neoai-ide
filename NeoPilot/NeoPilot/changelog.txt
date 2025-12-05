@@ -1,0 +1,128 @@
+# @neopilot/react-core
+
+## 1.8.2
+
+### Patch Changes
+
+- @neopilot/runtime-client-gql@1.8.2
+- @neopilot/shared@1.8.2
+
+
+# @neopilot/react-ui
+
+## 1.8.2
+
+### Patch Changes
+
+- @neopilot/runtime-client-gql@1.8.2
+- @neopilot/react-core@1.8.2
+- @neopilot/shared@1.8.2
+
+
+# @neopilot/sdk-js
+
+## 1.8.2
+
+### Patch Changes
+
+- @neopilot/shared@1.8.2
+
+
+# @neopilot/react-textarea
+
+## 1.8.2
+
+### Patch Changes
+
+- @neopilot/runtime-client-gql@1.8.2
+- @neopilot/react-core@1.8.2
+- @neopilot/shared@1.8.2
+
+
+# @neopilot/runtime
+
+## 1.8.2
+
+### Patch Changes
+
+- 4eedf97: - fix: handle failure to fetch langgraph schema
+  - @neopilot/shared@1.8.2
+
+
+# @neopilot/runtime-client-gql
+
+## 1.8.2
+
+### Patch Changes
+
+- @neopilot/shared@1.8.2
+
+
+# @neopilot/shared
+
+## 1.8.2
+
+# @neopilot/react-core
+
+## 1.8.2
+
+### Patch Changes
+
+- @neopilot/runtime-client-gql@1.8.2
+- @neopilot/shared@1.8.2
+
+
+# @neopilot/react-ui
+
+## 1.8.2
+
+### Patch Changes
+
+- @neopilot/runtime-client-gql@1.8.2
+- @neopilot/react-core@1.8.2
+- @neopilot/shared@1.8.2
+
+
+# @neopilot/sdk-js
+
+## 1.8.2
+
+### Patch Changes
+
+- @neopilot/shared@1.8.2
+
+
+# @neopilot/react-textarea
+
+## 1.8.2
+
+### Patch Changes
+
+- @neopilot/runtime-client-gql@1.8.2
+- @neopilot/react-core@1.8.2
+- @neopilot/shared@1.8.2
+
+
+# @neopilot/runtime
+
+## 1.8.2
+
+### Patch Changes
+
+- 4eedf97: - fix: handle failure to fetch langgraph schema
+  - @neopilot/shared@1.8.2
+
+
+# @neopilot/runtime-client-gql
+
+## 1.8.2
+
+### Patch Changes
+
+- @neopilot/shared@1.8.2
+
+
+# @neopilot/shared
+
+## 1.8.2
+

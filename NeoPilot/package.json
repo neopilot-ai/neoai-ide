@@ -1,0 +1,24 @@
+{
+  "name": "neopilot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "danger": "^12.3.3",
+    "husky": "^9.1.4"
+  },
+  "dependencies": {
+    "@neopilot/react-core": "./NeoPilot/packages/react-core",
+    "@neopilot/react-textarea": "./NeoPilot/packages/react-textarea",
+    "@neopilot/react-ui": "./NeoPilot/packages/react-ui",
+    "@neopilot/runtime": "./NeoPilot/packages/rumtime",
+    "nvm": "^0.0.4"
+  }
+}

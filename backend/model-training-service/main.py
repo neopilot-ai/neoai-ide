@@ -11,9 +11,9 @@ from typing import Dict, List, Optional, Any, Union
 from datetime import datetime
 from enum import Enum
 
-from fastapi import FastAPI, HTTPException, Depends, BackgroundTasks, UploadFile, File
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.middleware.gzip import GZipMiddleware
+from readyapi import ReadyAPI, HTTPException, Depends, BackgroundTasks, UploadFile, File
+from readyapi.middleware.cors import CORSMiddleware
+from readyapi.middleware.gzip import GZipMiddleware
 from pydantic import BaseModel, Field
 import redis.asyncio as redis
 from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
@@ -191,7 +191,7 @@ class ModelDeployment(BaseModel):
     created_at: datetime = Field(default_factory=datetime.utcnow, description="Creation time")
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(app: ReadyAPI):
     """Application lifespan manager"""
     global redis_client, training_manager, model_manager, data_manager, evaluation_manager, deployment_manager
     
@@ -245,8 +245,8 @@ async def lifespan(app: FastAPI):
     
     logger.info("Model Training Service shutdown complete")
 
-# Create FastAPI app
-app = FastAPI(
+# Create ReadyAPI app
+app = ReadyAPI(
     title="NeoAI IDE - Model Training Service",
     description="Custom AI model training and fine-tuning service",
     version="1.0.0",

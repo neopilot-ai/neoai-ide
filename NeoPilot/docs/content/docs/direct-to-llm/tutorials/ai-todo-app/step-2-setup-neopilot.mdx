@@ -1,0 +1,101 @@
+---
+title: "Step 2: Setup NeoPilot"
+---
+
+import SelfHostingCopilotRuntimeCreateEndpoint from "@/snippets/self-hosting-copilot-runtime-create-endpoint.mdx";
+import CopilotCloudConfigureNeoPilotProvider from "@/snippets/copilot-cloud-configure-neopilot-provider.mdx";
+import SelfHostingCopilotRuntimeConfigureNeoPilotProvider from "@/snippets/self-hosting-copilot-runtime-configure-neopilot-provider.mdx";
+import {
+  TailoredContent,
+  TailoredContentOption,
+} from "@/components/react/tailored-content";
+import { FaCloud, FaServer } from "react-icons/fa";
+
+Now that we have our todo list app running, we're ready to integrate NeoPilot. For this tutorial, we will install the following dependencies:
+
+- `@neopilot/react-core`: The core library for NeoPilot, which contains the NeoPilot provider and useful hooks.
+- `@neopilot/react-ui`: The UI library for NeoPilot, which contains the NeoPilot UI components such as the sidebar, chat popup, textarea and more.
+
+## Install Dependencies
+
+To install the NeoPilot dependencies, run the following:
+
+```npm
+npm install @neopilot/react-core @neopilot/react-ui
+```
+
+## Setup NeoPilot
+
+<TailoredContent id="hosting">
+<TailoredContentOption
+  id="copilot-cloud"
+  title="Copilot Cloud (Recommended)"
+  description="Use our hosted backend endpoint to get started quickly."
+  icon={<FaCloud />}
+>
+In order to use NeoPilot, we'll need to configure the `NeoPilot` provider.
+
+<CopilotCloudConfigureNeoPilotProvider components={props.components} />
+</TailoredContentOption>
+<TailoredContentOption
+  id="self-hosted"
+  title="Self-hosting"
+  description="Learn to host NeoPilot's runtime yourself with your own backend."
+  icon={<FaServer />}
+>
+
+<Steps>
+<Step>
+### Set up Copilot Runtime Endpoint
+<SelfHostingCopilotRuntimeCreateEndpoint components={props.components} />
+</Step>
+<Step>
+
+### Configure the NeoPilot Provider
+
+<SelfHostingCopilotRuntimeConfigureNeoPilotProvider
+  components={props.components}
+/>
+
+</Step>
+</Steps>
+</TailoredContentOption>
+</TailoredContent>
+
+### NeoPilot Chat Popup
+
+We provide several plug-and-play components for you to interact with your copilot. Some of these are `<CopilotPopup/>`, `<CopilotSidebar/>`, and `<CopilotChat/>`. You can of course use NeoPilot in headless mode and provide your own fully custom UI via [`useCopilotChat`](/reference/hooks/useCopilotChat).
+
+In this tutorial, we'll use the `<CopilotPopup/>` component to display the chat popup.
+
+```tsx title="app/page.tsx" showLineNumbers {6-7,15}
+"use client";
+
+import { TasksList } from "@/components/TasksList";
+import { TasksProvider } from "@/lib/hooks/use-tasks";
+import { NeoPilot } from "@neopilot/react-core";
+import { CopilotPopup } from "@neopilot/react-ui"; // [!code highlight]
+import "@neopilot/react-ui/styles.css"; // [!code highlight]
+
+export default function Home() {
+  return (
+    <>
+      <TasksProvider>
+        <TasksList />
+      </TasksProvider>
+      {/* [!code highlight:1] */}
+      <CopilotPopup />
+    </>
+  );
+}
+```
+
+Here's what we did:
+
+- We imported the `<CopilotPopup />` component from `@neopilot/react-ui`.
+- We wrapped the page with the `<NeoPilot>` provider.
+- We imported the built-in styles from `@neopilot/react-ui`.
+
+Now, head back to your app and you'll find a chat popup in the bottom right corner of the page. At this point, you can start interacting with your copilot! 🎉
+
+In the next step, we'll make our assistant smarter by providing it with readable state about our todo list.

@@ -1,0 +1,60 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "dependencyDashboard": true,
+  "extends": [
+    "config:recommended"
+  ],
+  "poetry": {
+    "enabled": true
+  },
+  "pep621": {
+    "enabled": false
+  },
+  "npm": {
+    "enabled": true
+  },
+  "ignorePaths": [
+    "node_modules"
+  ],
+  "packageRules": [
+    {
+      "description": "[All] Ignore all packages initially",
+      "enabled": false,
+      "matchPackageNames": [
+        "*"
+      ],
+      "labels": [
+        "dependencies"
+      ]
+    },
+    {
+      "description": "[Examples] Enable Renovate for NeoPilot packages only",
+      "enabled": true,
+      "matchFileNames": [
+        "examples/**"
+      ],
+      "matchPackageNames": [
+        "/^@neopilot/",
+        "/^neopilot/"
+      ],
+      "labels": [
+        "examples"
+      ],
+      "groupName": "NeoPilot Examples"
+    },
+    {
+      "description": "[@neopilot/*] Dependencies",
+      "enabled": true,
+      "matchFileNames": [
+        "NeoPilot/packages/**"
+      ],
+      "matchPackageNames": [
+        "*"
+      ],
+      "labels": [
+        "dependencies-core"
+      ],
+      "groupName": "Core Dependencies"
+    }
+  ]
+}

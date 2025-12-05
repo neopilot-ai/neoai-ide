@@ -1,0 +1,6 @@
+{
+  "entryPoints": ["packages/*"],
+  "name": "NeoPilot Typedoc",
+  "entryPointStrategy": "packages",
+  "includeVersion": false
+}

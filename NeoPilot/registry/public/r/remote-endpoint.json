@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "remote-endpoint",
+  "type": "registry:block",
+  "title": "Remote Endpoint",
+  "description": "A remote endpoint for NeoPilot.",
+  "dependencies": [
+    "@neopilot/runtime"
+  ],
+  "files": [
+    {
+      "path": "registry/runtime/remote-endpoint.ts",
+      "content": "import { NextRequest } from \"next/server\";\nimport {\n  CopilotRuntime,\n  copilotRuntimeNextJSAppRouterEndpoint,\n  ExperimentalEmptyAdapter,\n} from \"@neopilot/runtime\";\n\nconst serviceAdapter = new ExperimentalEmptyAdapter();\n\nconst runtime = new CopilotRuntime({\n  remoteEndpoints: [\n    { url: process.env.NEOPILOT_REMOTE_ENDPOINT || \"http://localhost:8000/neopilot\" },\n  ],\n});\n\nexport const POST = async (req: NextRequest) => {\n  const { handleRequest } = copilotRuntimeNextJSAppRouterEndpoint({\n    runtime,\n    serviceAdapter,\n    endpoint: \"/api/neopilot\",\n  });\n\n  return handleRequest(req);\n};\n",
+      "type": "registry:lib",
+      "target": "app/api/neopilot/route.ts"
+    }
+  ]
+}

@@ -12,9 +12,9 @@ from typing import Dict, List, Optional, Any, Union
 from datetime import datetime
 from enum import Enum
 
-from fastapi import FastAPI, HTTPException, Depends, BackgroundTasks, WebSocket, WebSocketDisconnect
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.middleware.gzip import GZipMiddleware
+from readyapi import ReadyAPI, HTTPException, Depends, BackgroundTasks, WebSocket, WebSocketDisconnect
+from readyapi.middleware.cors import CORSMiddleware
+from readyapi.middleware.gzip import GZipMiddleware
 from pydantic import BaseModel, Field
 import redis.asyncio as redis
 import httpx
@@ -114,7 +114,7 @@ class AgentResponse(BaseModel):
     message: str = Field(..., description="Response message")
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(app: ReadyAPI):
     """Application lifespan manager"""
     global redis_client, ai_service_client, project_service_client
     
@@ -146,8 +146,8 @@ async def lifespan(app: FastAPI):
         await project_service_client.aclose()
     logger.info("Agent Service shutdown complete")
 
-# Create FastAPI app
-app = FastAPI(
+# Create ReadyAPI app
+app = ReadyAPI(
     title="NeoAI IDE - Agent Service",
     description="Advanced autonomous development agents with multi-step workflows",
     version="1.0.0",

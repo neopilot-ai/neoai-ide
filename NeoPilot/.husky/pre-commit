@@ -1,0 +1,1 @@
+cd NeoPilot && pnpm run precommit

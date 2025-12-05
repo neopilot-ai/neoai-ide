@@ -1,0 +1,27 @@
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+
+<Tabs className="p-0 m-0" groupId="python-pm" items={['uv', 'poetry', 'pip', 'conda']} default="uv">
+    <Tab value="uv">
+    ```bash
+    uv add neopilot
+    ```
+    </Tab>
+    <Tab value="poetry">
+    ```bash
+    poetry add neopilot
+    ```
+    </Tab>
+
+    <Tab value="pip">
+
+    ```bash
+    pip install neopilot --extra-index-url https://neopilot.gateway.scarf.sh/simple/
+    ```
+    </Tab>
+
+    <Tab value="conda">
+    ```bash
+    conda install neopilot -c neopilot-channel
+    ```
+    </Tab>
+</Tabs>

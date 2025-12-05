@@ -64,8 +64,8 @@ Backend Services
 ├── API Gateway (Node.js)
 ├── User Service (Node.js + Prisma)
 ├── Project Service (Node.js + Prisma)
-├── AI Service (Python + FastAPI)
-├── Agent Service (Python + FastAPI)
+├── AI Service (Python + ReadyAPI)
+├── Agent Service (Python + ReadyAPI)
 ├── Git Service (Go)
 └── Preview Service (Node.js + Docker)
 

@@ -1,0 +1,34 @@
+.neoPilotSidebar {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 30;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
+  font-feature-settings: normal;
+  font-variation-settings: normal;
+  touch-action: manipulation;
+}
+
+.neoPilotSidebar svg {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.neoPilotSidebarContentWrapper {
+  overflow: visible;
+  margin-right: 0px;
+  transition: margin-right 0.3s ease;
+}
+
+@media (min-width: 640px) {
+  .neoPilotSidebarContentWrapper.sidebarExpanded {
+    margin-right: 28rem;
+  }
+}

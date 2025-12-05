@@ -1,0 +1,102 @@
+---
+title: "CrewAI SDK"
+description: "The NeoPilot CrewAI SDK for Python allows you to build and run CrewAI agents with NeoPilot."
+---
+
+{
+ /*
+  * ATTENTION! DO NOT MODIFY THIS FILE!
+  * This page is auto-generated. If you want to make any changes to this page, changes must be made at:
+  * NeoPilot/../sdk-python/neopilot/crewai/crewai_sdk.py
+  */
+}
+## neopilot_predict_state
+
+Stream tool calls as state to NeoPilot.
+
+    To emit a tool call as streaming CrewAI state, pass the destination key in state,
+    the tool name and optionally the tool argument. (If you don't pass the argument name,
+    all arguments are emitted under the state key.)
+
+    ```python
+    from neopilot.crewai import neopilot_predict_state
+
+    await neopilot_predict_state(
+        {
+            "steps": {
+                "tool_name": "SearchTool",
+                "tool_argument": "steps",
+            },
+        }
+    )
+    ```
+
+### Parameters
+
+<PropertyReference name="config" type="Dict[str, NeoPilotPredictStateConfig]" required> 
+The configuration to predict the state.
+</PropertyReference>
+
+### Returns
+
+<PropertyReference name="returns" type="Awaitable[bool]">
+Always return True.
+</PropertyReference>
+
+## neopilot_emit_message
+
+Manually emits a message to NeoPilot. Useful in longer running nodes to update the user.
+    Important: You still need to return the messages from the node.
+
+    ### Examples
+
+    ```python
+    from neopilot.crewai import neopilot_emit_message
+
+    message = "Step 1 of 10 complete"
+    await neopilot_emit_message(message)
+
+    # Return the message from the node
+    return {
+        "messages": [AIMessage(content=message)]
+    }
+    ```
+
+### Parameters
+
+<PropertyReference name="message" type="str" required> 
+The message to emit.
+</PropertyReference>
+
+### Returns
+
+<PropertyReference name="returns" type="Awaitable[bool]">
+Always return True.
+</PropertyReference>
+
+## neopilot_emit_tool_call
+
+Manually emits a tool call to NeoPilot.
+
+    ```python
+    from neopilot.crewai import neopilot_emit_tool_call
+
+    await neopilot_emit_tool_call(name="SearchTool", args={"steps": 10})
+    ```
+
+### Parameters
+
+<PropertyReference name="name" type="str" required> 
+The name of the tool to emit.
+</PropertyReference>
+
+<PropertyReference name="args" type="Dict[str, Any]" required> 
+The arguments to emit.
+</PropertyReference>
+
+### Returns
+
+<PropertyReference name="returns" type="Awaitable[bool]">
+Always return True.
+</PropertyReference>
+

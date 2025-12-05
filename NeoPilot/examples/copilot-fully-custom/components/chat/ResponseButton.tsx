@@ -1,0 +1,6 @@
+import { ResponseButtonProps } from "@neopilot/react-ui";
+
+// empty response button since we don't need it
+export function CustomResponseButton(_: ResponseButtonProps) {
+    return <></>
+}

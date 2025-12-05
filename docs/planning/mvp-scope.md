@@ -176,7 +176,7 @@ Create a functional AI-first development environment that demonstrates core valu
 
 ### Backend Stack
 - **API Gateway**: Node.js with Express/Fastify
-- **AI Orchestration**: Python service with FastAPI
+- **AI Orchestration**: Python service with ReadyAPI
 - **Database**: PostgreSQL for user data, Redis for sessions
 - **File Storage**: Local filesystem for MVP, S3-compatible for production
 - **Authentication**: Auth0 or similar managed service

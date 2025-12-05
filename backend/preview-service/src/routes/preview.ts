@@ -8,7 +8,7 @@ const router = express.Router();
 // Validation rules
 const createPreviewValidation = [
   body('projectId').notEmpty().withMessage('Project ID is required'),
-  body('framework').isIn(['react', 'vue', 'angular', 'nextjs', 'nuxtjs', 'express', 'fastapi', 'django', 'python', 'static']).withMessage('Invalid framework'),
+  body('framework').isIn(['react', 'vue', 'angular', 'nextjs', 'nuxtjs', 'express', 'readyapi', 'django', 'python', 'static']).withMessage('Invalid framework'),
   body('buildCommand').optional().isString().withMessage('Build command must be a string'),
   body('startCommand').optional().isString().withMessage('Start command must be a string'),
   body('installCommand').optional().isString().withMessage('Install command must be a string'),

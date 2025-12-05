@@ -10,9 +10,9 @@ from contextlib import asynccontextmanager
 from typing import Dict, List, Optional, Any
 from datetime import datetime
 
-from fastapi import FastAPI, HTTPException, Depends, BackgroundTasks
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.middleware.gzip import GZipMiddleware
+from readyapi import ReadyAPI, HTTPException, Depends, BackgroundTasks
+from readyapi.middleware.cors import CORSMiddleware
+from readyapi.middleware.gzip import GZipMiddleware
 from pydantic import BaseModel, Field
 import redis.asyncio as redis
 import openai
@@ -39,7 +39,7 @@ openai_client: Optional[openai.AsyncOpenAI] = None
 anthropic_client: Optional[anthropic.AsyncAnthropic] = None
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(app: ReadyAPI):
     """Application lifespan manager"""
     global redis_client, openai_client, anthropic_client
     
@@ -69,8 +69,8 @@ async def lifespan(app: FastAPI):
         await redis_client.close()
     logger.info("AI Service shutdown complete")
 
-# Create FastAPI app
-app = FastAPI(
+# Create ReadyAPI app
+app = ReadyAPI(
     title="NeoAI IDE - AI Service",
     description="AI model orchestration and intelligent code assistance",
     version="1.0.0",

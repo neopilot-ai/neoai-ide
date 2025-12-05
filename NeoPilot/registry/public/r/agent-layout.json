@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "agent-layout",
+  "type": "registry:block",
+  "title": "Agent Layout",
+  "description": "A layout for NeoPilot with an agent.",
+  "dependencies": [
+    "@neopilot/react-core"
+  ],
+  "files": [
+    {
+      "path": "registry/layout/agent-layout.tsx",
+      "content": "import \"@neopilot/react-ui/styles.css\";\nimport React, { ReactNode } from \"react\";\nimport { NeoPilot } from \"@neopilot/react-core\";\n\n// Where NeoPilot will proxy requests to. If you're using Copilot Cloud, this environment variable will be empty.\nconst runtimeUrl = process.env.NEXT_PUBLIC_NEOPILOT_RUNTIME_URL\n// When using Copilot Cloud, all we need is the publicApiKey.\nconst publicApiKey = process.env.NEXT_PUBLIC_COPILOT_API_KEY;\n// The name of the agent that we'll be using.\nconst agentName = process.env.NEXT_PUBLIC_NEOPILOT_AGENT_NAME\n\nexport default function Layout({ children }: { children: ReactNode }) {\n  return (\n    <NeoPilot \n      runtimeUrl={runtimeUrl}\n      publicApiKey={publicApiKey}\n      agent={agentName}\n    >\n      {children}\n    </NeoPilot>\n  );\n}\n",
+      "type": "registry:page",
+      "target": "app/neopilot/layout.tsx"
+    }
+  ]
+}

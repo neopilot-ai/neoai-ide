@@ -1,0 +1,150 @@
+h1.neoPilotMarkdownElement,
+h2.neoPilotMarkdownElement,
+h3.neoPilotMarkdownElement,
+h4.neoPilotMarkdownElement,
+h5.neoPilotMarkdownElement,
+h6.neoPilotMarkdownElement {
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+h1.neoPilotMarkdownElement:not(:last-child),
+h2.neoPilotMarkdownElement:not(:last-child),
+h3.neoPilotMarkdownElement:not(:last-child),
+h4.neoPilotMarkdownElement:not(:last-child),
+h5.neoPilotMarkdownElement:not(:last-child),
+h6.neoPilotMarkdownElement:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+h1.neoPilotMarkdownElement {
+  font-size: 1.5em;
+}
+
+h2.neoPilotMarkdownElement {
+  font-size: 1.25em;
+  font-weight: 600;
+}
+
+h3.neoPilotMarkdownElement {
+  font-size: 1.1em;
+}
+
+h4.neoPilotMarkdownElement {
+  font-size: 1em;
+}
+
+h5.neoPilotMarkdownElement {
+  font-size: 0.9em;
+}
+
+h6.neoPilotMarkdownElement {
+  font-size: 0.8em;
+}
+
+a.neoPilotMarkdownElement {
+  color: blue;
+  text-decoration: underline;
+}
+
+p.neoPilotMarkdownElement {
+  padding: 0px;
+  margin: 0px;
+  line-height: 1.75;
+  font-size: 1rem;
+}
+
+p.neoPilotMarkdownElement:not(:last-child),
+pre.neoPilotMarkdownElement:not(:last-child),
+ol.neoPilotMarkdownElement:not(:last-child),
+ul.neoPilotMarkdownElement:not(:last-child),
+blockquote.neoPilotMarkdownElement:not(:last-child) {
+  margin-bottom: 1.25em;
+}
+
+blockquote.neoPilotMarkdownElement {
+  border-color: rgb(142, 142, 160);
+  border-left-width: 2px;
+  border-left-style: solid;
+  line-height: 1.2;
+  padding-left: 10px;
+}
+
+blockquote.neoPilotMarkdownElement p {
+  padding: 0.7em 0;
+}
+
+ul.neoPilotMarkdownElement {
+  list-style-type: disc;
+  padding-left: 20px;
+  overflow: visible;
+}
+
+li.neoPilotMarkdownElement {
+  list-style-type: inherit;
+  list-style-position: outside;
+  margin-left: 0;
+  padding-left: 0;
+  position: relative;
+  overflow: visible;
+}
+
+.neoPilotCodeBlock {
+  position: relative;
+  width: 100%;
+  background-color: rgb(9 9 11);
+  border-radius: 0.375rem;
+}
+
+.neoPilotCodeBlockToolbar {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgb(39 39 42);
+  padding-left: 1rem;
+  padding-top: 0.09rem;
+  padding-bottom: 0.09rem;
+  color: rgb(228, 228, 228);
+  border-top-left-radius: 0.375rem;
+  border-top-right-radius: 0.375rem;
+  font-family: sans-serif;
+}
+
+.neoPilotCodeBlockToolbarLanguage {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  text-transform: lowercase;
+}
+
+.neoPilotCodeBlockToolbarButtons {
+  display: flex;
+  align-items: center;
+  margin-right: 0.25rem;
+  margin-left: 0.25rem;
+}
+
+.neoPilotCodeBlockToolbarButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  height: 2.5rem;
+  padding: 3px;
+  margin: 2px;
+}
+
+.neoPilotCodeBlockToolbarButton:hover {
+  background-color: rgb(55, 55, 58);
+}
+
+.neoPilotInlineCode {
+  background-color: var(--copilot-kit-input-background-color);
+  border: 1px solid var(--copilot-kit-separator-color);
+  border-radius: 0.375rem;
+  padding: 0.05rem 0.4rem;
+  font-size: 15px;
+}

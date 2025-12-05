@@ -1,0 +1,18 @@
+{
+  "title": "hooks",
+  "pages": [
+    "useDefaultTool",
+    "useFrontendTool",
+    "useRenderToolCall",
+    "useHumanInTheLoop",
+    "useCopilotReadable",
+    "useCopilotAdditionalInstructions",
+    "useCopilotChat",
+    "useCopilotChatHeadless_c",
+    "useCopilotChatSuggestions",
+    "useCoAgent",
+    "useCoAgentStateRender",
+    "useLangGraphInterrupt",
+    "useCopilotAction"
+  ]
+}

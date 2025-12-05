@@ -1,0 +1,16 @@
+import InstallPythonSDKSnippet from "@/snippets/install-python-sdk.mdx";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+
+Any LangGraph agent can be used with NeoPilot. However, creating deep agentic
+experiences with NeoPilot requires our LangGraph SDK.
+
+<Tabs groupId="language_langgraph_agent" items={["Python", "TypeScript"]} className="p-0 m-0" persist>
+  <Tab value="Python" className="p-0 m-0">
+    <InstallPythonSDKSnippet components={props.components} />
+  </Tab>
+  <Tab value="TypeScript" className="p-0 m-0">
+    ```npm
+    npm install @neopilot/sdk-js
+    ```
+  </Tab>
+</Tabs>

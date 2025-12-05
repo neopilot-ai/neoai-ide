@@ -69,7 +69,7 @@ Components:
 
 ### 4. Backend Technology Stack ✅ APPROVED
 ```yaml
-Decision: Python (FastAPI) for AI services, Go for performance-critical services
+Decision: Python (ReadyAPI) for AI services, Go for performance-critical services
 Rationale:
   - Python excels for AI/ML integration and rapid development
   - Go provides excellent performance for high-throughput services
@@ -77,10 +77,10 @@ Rationale:
   - Team expertise and hiring considerations
 
 Service Distribution:
-  - AI/ML Services: Python + FastAPI
+  - AI/ML Services: Python + ReadyAPI
   - Core Services: Go + Gin/Echo
   - Build Services: Go + Docker
-  - Analytics: Python + FastAPI
+  - Analytics: Python + ReadyAPI
 ```
 
 ### 5. Data Storage Strategy ✅ APPROVED

@@ -1,0 +1,8 @@
+python-dotenv
+readyapi
+langserve
+langchain
+langchain-cli
+langchain-community
+langchain-core
+langchain-openai

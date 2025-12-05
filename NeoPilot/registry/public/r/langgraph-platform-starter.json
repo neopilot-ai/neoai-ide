@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "langgraph-platform-starter",
+  "type": "registry:block",
+  "title": "LangGraph Platform Starter",
+  "description": "Bootstrap your Next.js project with NeoPilot and LangGraph Platform.",
+  "dependencies": [
+    "@neopilot/runtime",
+    "@neopilot/react-core"
+  ],
+  "files": [
+    {
+      "path": "registry/layout/agent-layout.tsx",
+      "content": "import \"@neopilot/react-ui/styles.css\";\nimport React, { ReactNode } from \"react\";\nimport { NeoPilot } from \"@neopilot/react-core\";\n\n// Where NeoPilot will proxy requests to. If you're using Copilot Cloud, this environment variable will be empty.\nconst runtimeUrl = process.env.NEXT_PUBLIC_NEOPILOT_RUNTIME_URL\n// When using Copilot Cloud, all we need is the publicApiKey.\nconst publicApiKey = process.env.NEXT_PUBLIC_COPILOT_API_KEY;\n// The name of the agent that we'll be using.\nconst agentName = process.env.NEXT_PUBLIC_NEOPILOT_AGENT_NAME\n\nexport default function Layout({ children }: { children: ReactNode }) {\n  return (\n    <NeoPilot \n      runtimeUrl={runtimeUrl}\n      publicApiKey={publicApiKey}\n      agent={agentName}\n    >\n      {children}\n    </NeoPilot>\n  );\n}\n",
+      "type": "registry:page",
+      "target": "app/neopilot/layout.tsx"
+    },
+    {
+      "path": "registry/runtime/langgraph-platform.ts",
+      "content": "import { NextRequest } from \"next/server\";\nimport {\n  CopilotRuntime,\n  copilotRuntimeNextJSAppRouterEndpoint,\n  ExperimentalEmptyAdapter,\n  langGraphPlatformEndpoint,\n} from \"@neopilot/runtime\";\n\nconst serviceAdapter = new ExperimentalEmptyAdapter();\n\nconst runtime = new CopilotRuntime({\n  remoteEndpoints: [\n    langGraphPlatformEndpoint({\n      deploymentUrl: process.env.LANGGRAPH_DEPLOYMENT_URL || \"\",\n      langsmithApiKey: process.env.LANGSMITH_API_KEY || \"\", // only used in LangGraph Platform deployments\n      agents: [{\n          name: process.env.NEXT_PUBLIC_NEOPILOT_AGENT_NAME || \"\",\n          description: process.env.NEXT_PUBLIC_NEOPILOT_AGENT_DESCRIPTION || 'A helpful LLM agent.'\n      }]\n    }),\n  ],\n});\n\nexport const POST = async (req: NextRequest) => {\n  const { handleRequest } = copilotRuntimeNextJSAppRouterEndpoint({\n    runtime,\n    serviceAdapter,\n    endpoint: \"/api/neopilot\",\n  });\n\n  return handleRequest(req);\n};\n",
+      "type": "registry:lib",
+      "target": "app/api/neopilot/route.ts"
+    }
+  ]
+}

@@ -10,7 +10,7 @@ const router = express.Router();
 const createProjectValidation = [
   body('name').trim().isLength({ min: 1, max: 100 }).withMessage('Project name must be 1-100 characters'),
   body('description').optional().trim().isLength({ max: 500 }).withMessage('Description must be less than 500 characters'),
-  body('framework').optional().isIn(['react', 'vue', 'angular', 'svelte', 'nextjs', 'nuxtjs', 'express', 'fastapi', 'django', 'flask', 'other']).withMessage('Invalid framework'),
+  body('framework').optional().isIn(['react', 'vue', 'angular', 'svelte', 'nextjs', 'nuxtjs', 'express', 'readyapi', 'django', 'flask', 'other']).withMessage('Invalid framework'),
   body('language').optional().isIn(['javascript', 'typescript', 'python', 'java', 'cpp', 'rust', 'go', 'php', 'ruby', 'other']).withMessage('Invalid language'),
   body('isPublic').optional().isBoolean().withMessage('isPublic must be a boolean'),
 ];
@@ -18,7 +18,7 @@ const createProjectValidation = [
 const updateProjectValidation = [
   body('name').optional().trim().isLength({ min: 1, max: 100 }).withMessage('Project name must be 1-100 characters'),
   body('description').optional().trim().isLength({ max: 500 }).withMessage('Description must be less than 500 characters'),
-  body('framework').optional().isIn(['react', 'vue', 'angular', 'svelte', 'nextjs', 'nuxtjs', 'express', 'fastapi', 'django', 'flask', 'other']).withMessage('Invalid framework'),
+  body('framework').optional().isIn(['react', 'vue', 'angular', 'svelte', 'nextjs', 'nuxtjs', 'express', 'readyapi', 'django', 'flask', 'other']).withMessage('Invalid framework'),
   body('language').optional().isIn(['javascript', 'typescript', 'python', 'java', 'cpp', 'rust', 'go', 'php', 'ruby', 'other']).withMessage('Invalid language'),
   body('isPublic').optional().isBoolean().withMessage('isPublic must be a boolean'),
 ];

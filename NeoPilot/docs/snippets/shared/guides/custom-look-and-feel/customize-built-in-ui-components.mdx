@@ -1,0 +1,182 @@
+import { NeoPilotCSS, InteractiveCSSInspector } from "@/components/react/neopilot-css";
+
+NeoPilot has a variety of ways to customize colors and structures of the Copilot UI components.
+- [CSS Variables](#css-variables-easiest)
+- [Custom CSS](#custom-css)
+- [Custom Icons](#custom-icons)
+- [Custom Labels](#custom-labels)
+
+If you want to customize the style as well as the functionality of the Copilot UI, you can also try the following:
+- [Custom Sub-Components](/custom-look-and-feel/bring-your-own-components)
+- [Fully Headless UI](/custom-look-and-feel/headless-ui)
+
+## CSS Variables (Easiest)
+The easiest way to change the colors using in the Copilot UI components is to override NeoPilot CSS variables.
+
+<Callout type="info">
+  Hover over the interactive UI elements below to see the available CSS variables.
+</Callout>
+
+<NeoPilotCSS />
+<InteractiveCSSInspector />
+
+Once you've found the right variable, you can import `NeoPilotCSSProperties` and simply wrap NeoPilot in a div and override the CSS variables. 
+
+```tsx
+import { NeoPilotCSSProperties } from "@neopilot/react-ui";
+
+<div
+  // [!code highlight:5]
+  style={
+    {
+      "--copilot-kit-primary-color": "#222222",
+    } as NeoPilotCSSProperties
+  }
+>
+  <CopilotSidebar .../>
+</div>
+```
+
+### Reference
+
+| CSS Variable | Description |
+|-------------|-------------|
+| `--copilot-kit-primary-color` | Main brand/action color - used for buttons, interactive elements |
+| `--copilot-kit-contrast-color` | Color that contrasts with primary - used for text on primary elements |
+| `--copilot-kit-background-color` | Main page/container background color |
+| `--copilot-kit-secondary-color` | Secondary background - used for cards, panels, elevated surfaces |
+| `--copilot-kit-secondary-contrast-color` | Primary text color for main content |
+| `--copilot-kit-separator-color` | Border color for dividers and containers |
+| `--copilot-kit-muted-color` | Muted color for disabled/inactive states |
+
+## Custom CSS
+
+In addition to customizing the colors, the NeoPilot CSS is structured to easily allow customization via CSS classes.
+
+```css title="globals.css"
+.neoPilotButton {
+  border-radius: 0;
+}
+
+.neoPilotMessages {
+  padding: 2rem;
+}
+
+.neoPilotUserMessage {
+  background: #007AFF;
+}
+```
+
+### Reference
+
+<Callout>
+For a full list of styles and classes used in NeoPilot, click [here](https://github.com/neopilot-ai/neoai-ide/blob/main/NeoPilot/packages/react-ui/src/css/).
+</Callout>
+
+| CSS Class | Description |
+|-----------|-------------|
+| `.neoPilotMessages` | Main container for all chat messages with scroll behavior and spacing |
+| `.neoPilotInput` | Text input container with typing area and send button |
+| `.neoPilotUserMessage` | Styling for user messages including background, text color and bubble shape |
+| `.neoPilotAssistantMessage` | Styling for AI responses including background, text color and bubble shape |
+| `.neoPilotHeader` | Top bar of chat window containing title and controls |
+| `.neoPilotButton` | Primary chat toggle button with hover and active states |
+| `.neoPilotWindow` | Root container defining overall chat window dimensions and position |
+| `.neoPilotMarkdown` | Styles for rendered markdown content including lists, links and quotes |
+| `.neoPilotCodeBlock` | Code snippet container with syntax highlighting and copy button |
+| `.neoPilotChat` | Base chat layout container handling positioning and dimensions |
+| `.neoPilotSidebar` | Styles for sidebar chat mode including width and animations |
+| `.neoPilotPopup` | Styles for popup chat mode including position and animations |
+| `.neoPilotButtonIcon` | Icon styling within the main chat toggle button |
+| `.neoPilotButtonIconOpen` `.neoPilotButtonIconClose` | Icon states for when chat is open/closed |
+| `.neoPilotCodeBlockToolbar` | Top bar of code blocks with language and copy controls |
+| `.neoPilotCodeBlockToolbarLanguage` | Language label styling in code block toolbar |
+| `.neoPilotCodeBlockToolbarButtons` | Container for code block action buttons |
+| `.neoPilotCodeBlockToolbarButton` | Individual button styling in code block toolbar |
+| `.neoPilotSidebarContentWrapper` | Inner container for sidebar mode content |
+| `.neoPilotInputControls` | Container for input area buttons and controls |
+| `.neoPilotActivityDot1` `.neoPilotActivityDot2` `.neoPilotActivityDot3` | Animated typing indicator dots |
+| `.neoPilotDevConsole` | Development debugging console container |
+| `.neoPilotDevConsoleWarnOutdated` | Warning styles for outdated dev console |
+| `.neoPilotVersionInfo` | Version information display styles |
+| `.neoPilotDebugMenuButton` | Debug menu toggle button styling |
+| `.neoPilotDebugMenu` | Debug options menu container |
+| `.neoPilotDebugMenuItem` | Individual debug menu option styling |
+
+## Custom Fonts
+You can customize the fonts by updating the `fontFamily` property in the various CSS classes that are used in the NeoPilot.
+
+```css title="globals.css"
+.neoPilotMessages {
+  font-family: "Arial, sans-serif";
+}
+
+.neoPilotInput {
+  font-family: "Arial, sans-serif";
+}
+```
+
+### Reference
+You can update the main content classes to change the font family for the various components.
+
+| CSS Class | Description |
+|-----------|-------------|
+| `.neoPilotMessages` | Main container for all messages |
+| `.neoPilotInput` | The input field |
+| `.neoPilotMessage` | Base styling for all chat messages |
+| `.neoPilotUserMessage` | User messages |
+| `.neoPilotAssistantMessage` | AI responses |
+
+## Custom Icons
+
+You can customize the icons by passing the `icons` property to the `CopilotSidebar`, `CopilotPopup` or `CopilotChat` component.
+
+```tsx
+<CopilotChat
+  icons={{
+    // Use your own icons here – any React nodes
+    openIcon: <YourOpenIconComponent />,
+    closeIcon: <YourCloseIconComponent />,
+  }}
+/>
+```
+
+### Reference
+
+| Icon | Description |
+|--------------|-------------|
+| `openIcon` | The icon to use for the open chat button |
+| `closeIcon` | The icon to use for the close chat button |
+| `headerCloseIcon` | The icon to use for the close chat button in the header |
+| `sendIcon` | The icon to use for the send button |
+| `activityIcon` | The icon to use for the activity indicator |
+| `spinnerIcon` | The icon to use for the spinner |
+| `stopIcon` | The icon to use for the stop button |
+| `regenerateIcon` | The icon to use for the regenerate button |
+| `pushToTalkIcon` | The icon to use for push to talk |
+
+## Custom Labels
+
+To customize labels, pass the `labels` property to the `CopilotSidebar`, `CopilotPopup` or `CopilotChat` component.
+
+```tsx
+<CopilotChat
+  labels={{
+    initial: "Hello! How can I help you today?",
+    title: "My Copilot",
+    placeholder: "Ask me anything!",
+    stopGenerating: "Stop",
+    regenerateResponse: "Regenerate",
+  }} 
+/>
+```
+
+### Reference
+
+| Label | Description |
+|---------------|-------------|
+| `initial` | The initial message(s) to display in the chat window |
+| `title` | The title to display in the header |
+| `placeholder` | The placeholder to display in the input |
+| `stopGenerating` | The label to display on the stop button |
+| `regenerateResponse` | The label to display on the regenerate button |

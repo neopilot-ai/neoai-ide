@@ -1,0 +1,73 @@
+---
+title: Threads
+description: Learn how to load chat messages and threads within the NeoPilot framework.
+icon: "lucide/MessagesSquare"
+---
+
+LangGraph supports threads, a way to group messages together and ultimately maintain a continuous chat history. NeoPilot
+provides a few different ways to interact with this concept.
+
+This guide assumes you have already gone through the [quickstart](/quickstart) guide.
+
+## Loading an Existing Thread
+
+To load an existing thread in NeoPilot, you can simply set the `threadId` property on `<NeoPilot>` like so.
+
+<Callout>
+  When using LangGraph platform, the `threadId` must be a UUID.
+</Callout>
+
+```tsx
+import { NeoPilot } from "@neopilot/react-core";
+
+{/* [!code highlight:1] */}
+<NeoPilot threadId="37aa68d0-d15b-45ae-afc1-0ba6c3e11353">
+  <YourApp />
+</NeoPilot>
+```
+
+## Dynamically Switching Threads
+
+You can also make the `threadId` dynamic. Once it is set, NeoPilot will load the previous messages for that thread.
+
+```tsx
+import { useState } from "react";
+import { NeoPilot } from "@neopilot/react-core";
+
+const Page = () => {
+  const [threadId, setThreadId] = useState("af2fa5a4-36bd-4e02-9b55-2580ab584f89"); // [!code highlight]
+  return (
+    {/* [!code highlight:3] */}
+    <NeoPilot threadId={threadId}>
+      <YourApp setThreadId={setThreadId} />
+    </NeoPilot>
+  )
+}
+
+const YourApp = ({ setThreadId }) => {
+  return (
+    {/* [!code highlight:1] */}
+    <Button onClick={() => setThreadId("679e8da5-ee9b-41b1-941b-80e0cc73a008")}>
+      Change Thread
+    </Button>
+  )
+}
+```
+
+## Using setThreadId
+
+NeoPilot will also return the current `threadId` and a `setThreadId` function from the `useCopilotContext` hook. You can use `setThreadId` to change the `threadId`.
+
+```tsx
+import { useCopilotContext } from "@neopilot/react-core";
+
+const ChangeThreadButton = () => {
+  const { threadId, setThreadId } = useCopilotContext(); // [!code highlight]
+  return (
+    {/* [!code highlight:1] */}
+    <Button onClick={() => setThreadId("d73c22f3-1f8e-4a93-99db-5c986068d64f")}>
+      Change Thread
+    </Button>
+  )
+}
+```

@@ -1,0 +1,19 @@
+```tsx title="layout.tsx"
+import "./globals.css";
+import { ReactNode } from "react";
+import { NeoPilot } from "@neopilot/react-core"; // [!code highlight]
+ 
+export default function RootLayout({ children }: { children: ReactNode }) {
+  return (
+    <html lang="en">
+      <body>
+        {/* Use the public api key you got from Copilot Cloud  */}
+        {/* [!code highlight:3] */}
+        <NeoPilot publicApiKey="<your-copilot-cloud-public-api-key>"> 
+          {children}
+        </NeoPilot>
+      </body>
+    </html>
+  );
+}
+```

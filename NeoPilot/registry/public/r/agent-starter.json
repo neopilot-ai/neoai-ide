@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "agent-starter",
+  "type": "registry:block",
+  "title": "Agent Starter",
+  "description": "A starter for NeoPilot with an agent.",
+  "dependencies": [
+    "@neopilot/runtime",
+    "@neopilot/react-core"
+  ],
+  "files": [
+    {
+      "path": "registry/layout/agent-layout.tsx",
+      "content": "import \"@neopilot/react-ui/styles.css\";\nimport React, { ReactNode } from \"react\";\nimport { NeoPilot } from \"@neopilot/react-core\";\n\n// Where NeoPilot will proxy requests to. If you're using Copilot Cloud, this environment variable will be empty.\nconst runtimeUrl = process.env.NEXT_PUBLIC_NEOPILOT_RUNTIME_URL\n// When using Copilot Cloud, all we need is the publicApiKey.\nconst publicApiKey = process.env.NEXT_PUBLIC_COPILOT_API_KEY;\n// The name of the agent that we'll be using.\nconst agentName = process.env.NEXT_PUBLIC_NEOPILOT_AGENT_NAME\n\nexport default function Layout({ children }: { children: ReactNode }) {\n  return (\n    <NeoPilot \n      runtimeUrl={runtimeUrl}\n      publicApiKey={publicApiKey}\n      agent={agentName}\n    >\n      {children}\n    </NeoPilot>\n  );\n}\n",
+      "type": "registry:page",
+      "target": "app/neopilot/layout.tsx"
+    },
+    {
+      "path": "registry/runtime/remote-endpoint.ts",
+      "content": "import { NextRequest } from \"next/server\";\nimport {\n  CopilotRuntime,\n  copilotRuntimeNextJSAppRouterEndpoint,\n  ExperimentalEmptyAdapter,\n} from \"@neopilot/runtime\";\n\nconst serviceAdapter = new ExperimentalEmptyAdapter();\n\nconst runtime = new CopilotRuntime({\n  remoteEndpoints: [\n    { url: process.env.NEOPILOT_REMOTE_ENDPOINT || \"http://localhost:8000/neopilot\" },\n  ],\n});\n\nexport const POST = async (req: NextRequest) => {\n  const { handleRequest } = copilotRuntimeNextJSAppRouterEndpoint({\n    runtime,\n    serviceAdapter,\n    endpoint: \"/api/neopilot\",\n  });\n\n  return handleRequest(req);\n};\n",
+      "type": "registry:lib",
+      "target": "app/api/neopilot/route.ts"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "extends": "../../utilities/tsconfig/base.json",
+  "compilerOptions": {
+    "strictNullChecks": true,
+    "outDir": "dist"
+  },
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"],
+  "paths": {
+    "@/*": ["./src/*"],
+    "@neopilot/react-core/*": ["../packages/react-core/*"],
+    "@neopilot/react-ui/*": ["../packages/react-ui/*"],
+    "@neopilot/react-textarea/*": ["../packages/react-textarea/*"],
+    "@neopilot/runtime/*": ["../packages/runtime/*"],
+  }
+}

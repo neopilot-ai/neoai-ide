@@ -1,0 +1,27 @@
+<Tabs groupId="python-pm" items={['Poetry', 'pip', 'conda']} default="Poetry">
+    <Tab value="Poetry">
+    ```bash
+    poetry add neopilot
+    # including support for crewai
+    poetry add neopilot[crewai]
+    ```
+    </Tab>
+    
+    <Tab value="pip">
+
+    ```bash
+    pip install neopilot --extra-index-url https://neopilot.gateway.scarf.sh/simple/
+    # including support for crewai
+    pip install neopilot[crewai] --extra-index-url https://neopilot.gateway.scarf.sh/simple/
+    ```
+    </Tab>
+
+    <Tab value="conda">
+    ```bash
+    conda install neopilot -c neopilot-channel
+    # including support for crewai
+    conda install neopilot[crewai] -c neopilot-channel
+    ```
+    </Tab>
+
+</Tabs>

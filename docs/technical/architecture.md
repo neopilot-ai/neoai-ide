@@ -149,7 +149,7 @@ Configuration:
 
 #### User Service
 ```python
-# Technology: FastAPI + SQLAlchemy + PostgreSQL
+# Technology: ReadyAPI + SQLAlchemy + PostgreSQL
 Responsibilities:
 - User registration and authentication
 - Profile management and preferences
@@ -166,7 +166,7 @@ API Endpoints:
 
 #### Project Service
 ```python
-# Technology: FastAPI + SQLAlchemy + PostgreSQL + S3
+# Technology: ReadyAPI + SQLAlchemy + PostgreSQL + S3
 Responsibilities:
 - Project creation and management
 - File system operations and versioning
@@ -183,7 +183,7 @@ API Endpoints:
 
 #### AI Service
 ```python
-# Technology: FastAPI + LangChain + Multiple LLM Providers
+# Technology: ReadyAPI + LangChain + Multiple LLM Providers
 Responsibilities:
 - AI model orchestration and routing
 - Prompt engineering and optimization
@@ -200,7 +200,7 @@ API Endpoints:
 
 #### Agent Service
 ```python
-# Technology: FastAPI + Celery + Redis + Docker
+# Technology: ReadyAPI + Celery + Redis + Docker
 Responsibilities:
 - Agent workflow orchestration
 - Task planning and execution
@@ -268,7 +268,7 @@ API Endpoints:
 
 #### Analytics Service
 ```python
-# Technology: FastAPI + ClickHouse + Apache Kafka
+# Technology: ReadyAPI + ClickHouse + Apache Kafka
 Responsibilities:
 - Event tracking and analytics
 - Performance monitoring
